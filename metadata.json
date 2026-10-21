@@ -1,0 +1,7 @@
+{
+  "name": "Kozmik Levha",
+  "description": "Nöronlardan Galaksilere, Yaşamın ve Frekansın Gizli Ağı — Kozmik Biyoloji, NöroKozmos, Frekans & Rezonans ve Mistik Kimya bilgi platformu.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
