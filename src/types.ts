@@ -12,10 +12,25 @@ export interface Category {
   stats: string;
 }
 
+export type CosmicPeriodId = 'all' | 'primordial' | 'stelliferous' | 'planetary' | 'biophotonic' | 'neural';
+
+export interface CosmicPeriod {
+  id: CosmicPeriodId;
+  name: string;
+  temporalRange: string;
+  tagline: string;
+  description: string;
+  color: 'cyan' | 'purple' | 'green' | 'amber';
+  accentColorHex: string;
+  glowColor: string;
+}
+
 export interface Article {
   id: string;
   categoryId: CategoryId;
   categoryName: string;
+  periodId: CosmicPeriodId;
+  periodEra: string;
   title: string;
   excerpt: string;
   content: string[];

@@ -56,6 +56,9 @@ export const ArticleModal: React.FC<ArticleModalProps> = ({ article, onClose }) 
                 <Activity className="w-3.5 h-3.5 text-[#b000ff]" />
                 {article.frequency}
               </span>
+              <span className="text-xs font-mono tracking-wider px-3 py-1 rounded-full bg-black/70 text-[#00ff88] border border-[#00ff88]/40 backdrop-blur-md">
+                {article.periodEra}
+              </span>
             </div>
 
             <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">

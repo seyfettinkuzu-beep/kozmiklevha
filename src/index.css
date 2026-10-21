@@ -114,3 +114,13 @@
   animation: pulseGlow 5s ease-in-out infinite;
 }
 
+/* Custom scrollbar hiding utilities */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+

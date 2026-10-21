@@ -1,6 +1,8 @@
-import React from 'react';
-import { Sparkles, BrainCircuit, Dna, Radio, ArrowRight, Clock, Activity } from 'lucide-react';
-import { Category, Article, CategoryId } from '../types';
+import React, { useState, useMemo } from 'react';
+import { Sparkles, BrainCircuit, Dna, Radio, ArrowRight, Clock, Activity, RotateCcw } from 'lucide-react';
+import { Category, Article, CategoryId, CosmicPeriodId } from '../types';
+import { COSMIC_PERIODS } from '../data/cosmicData';
+import { CosmicTimeline } from './CosmicTimeline';
 
 interface ContentGridProps {
   categories: Category[];
@@ -19,17 +21,33 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
   onOpenArticle,
   searchQuery,
 }) => {
-  // Filter articles based on category and search query
-  const filteredArticles = articles.filter((art) => {
-    const matchesCategory = selectedCategory === 'all' || art.categoryId === selectedCategory;
-    const matchesSearch =
-      searchQuery.trim() === '' ||
-      art.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      art.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      art.categoryName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      art.tag.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  const [selectedPeriod, setSelectedPeriod] = useState<CosmicPeriodId>('all');
+
+  // Count articles per period
+  const articleCountByPeriod = useMemo(() => {
+    const counts: Record<string, number> = {};
+    articles.forEach((art) => {
+      counts[art.periodId] = (counts[art.periodId] || 0) + 1;
+    });
+    return counts;
+  }, [articles]);
+
+  // Filter articles based on category, cosmic period, and search query
+  const filteredArticles = useMemo(() => {
+    return articles.filter((art) => {
+      const matchesCategory = selectedCategory === 'all' || art.categoryId === selectedCategory;
+      const matchesPeriod = selectedPeriod === 'all' || art.periodId === selectedPeriod;
+      const matchesSearch =
+        searchQuery.trim() === '' ||
+        art.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        art.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        art.categoryName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        art.tag.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        art.periodEra.toLowerCase().includes(searchQuery.toLowerCase());
+
+      return matchesCategory && matchesPeriod && matchesSearch;
+    });
+  }, [articles, selectedCategory, selectedPeriod, searchQuery]);
 
   const getCategoryIcon = (id: CategoryId) => {
     switch (id) {
@@ -66,10 +84,12 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
     }
   };
 
+  const currentPeriodObj = COSMIC_PERIODS.find((p) => p.id === selectedPeriod);
+
   return (
     <section id="icerik-alani" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-      {/* Category Nav Filters */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 border-b border-slate-800/80 pb-8">
+      {/* Category Nav Filters Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6 border-b border-slate-800/80 pb-8">
         <div>
           <div className="flex items-center gap-2 text-xs font-mono tracking-widest text-[#00f0ff] uppercase mb-2">
             <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-ping" />
@@ -80,7 +100,7 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
           </h2>
         </div>
 
-        {/* Category Pills */}
+        {/* Category Filter Buttons */}
         <div className="flex flex-wrap items-center gap-2 sm:gap-3">
           <button
             id="filter-all"
@@ -112,8 +132,16 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
         </div>
       </div>
 
-      {/* Category Pillars (Quick Architecture Display) */}
-      {selectedCategory === 'all' && (
+      {/* Interactive Horizontal Scroll Cosmic Timeline */}
+      <CosmicTimeline
+        periods={COSMIC_PERIODS}
+        selectedPeriod={selectedPeriod}
+        onSelectPeriod={setSelectedPeriod}
+        articleCountByPeriod={articleCountByPeriod}
+      />
+
+      {/* Category Pillars (Quick Architecture Display - visible on all categories) */}
+      {selectedCategory === 'all' && selectedPeriod === 'all' && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
           {categories.map((cat) => (
             <div
@@ -157,6 +185,58 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
         </div>
       )}
 
+      {/* Active Filter Indicators Header */}
+      {(selectedPeriod !== 'all' || selectedCategory !== 'all' || searchQuery.trim() !== '') && (
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-8 p-4 rounded-2xl bg-[#070b16]/70 border border-[#00f0ff]/20">
+          <div className="flex flex-wrap items-center gap-2 text-xs">
+            <span className="text-slate-400 font-mono">Filtrelenen Sonuçlar:</span>
+            {selectedPeriod !== 'all' && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#00f0ff]/15 border border-[#00f0ff]/40 text-[#00f0ff] font-mono">
+                <span>Dönem: {currentPeriodObj?.name}</span>
+                <button
+                  onClick={() => setSelectedPeriod('all')}
+                  className="hover:text-white ml-1 cursor-pointer"
+                  title="Dönem filtresini kaldır"
+                >
+                  ×
+                </button>
+              </span>
+            )}
+            {selectedCategory !== 'all' && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#b000ff]/15 border border-[#b000ff]/40 text-purple-200 font-mono">
+                <span>Kategori: {categories.find((c) => c.id === selectedCategory)?.name}</span>
+                <button
+                  onClick={() => onSelectCategory('all')}
+                  className="hover:text-white ml-1 cursor-pointer"
+                  title="Kategori filtresini kaldır"
+                >
+                  ×
+                </button>
+              </span>
+            )}
+            {searchQuery.trim() !== '' && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-slate-200 font-mono">
+                <span>Arama: "{searchQuery}"</span>
+              </span>
+            )}
+            <span className="text-slate-500 font-mono text-[11px] ml-1">
+              ({filteredArticles.length} makale listeleniyor)
+            </span>
+          </div>
+
+          <button
+            onClick={() => {
+              onSelectCategory('all');
+              setSelectedPeriod('all');
+            }}
+            className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors cursor-pointer"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Tüm Filtreleri Temizle</span>
+          </button>
+        </div>
+      )}
+
       {/* Articles Main Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {filteredArticles.map((article) => {
@@ -197,10 +277,13 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
                   </div>
                 </div>
 
-                {/* Category Pill on bottom of image */}
-                <div className="absolute bottom-3 left-4">
+                {/* Category Pill and Temporal Era on bottom of image */}
+                <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
                   <span className="text-xs tracking-wider uppercase font-cinzel text-white/90 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                     {article.categoryName}
+                  </span>
+                  <span className="text-[10px] font-mono text-[#00f0ff] bg-black/70 px-2 py-0.5 rounded border border-[#00f0ff]/30 backdrop-blur-md">
+                    {article.periodEra}
                   </span>
                 </div>
               </div>
@@ -229,7 +312,7 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
 
                 {/* Card Footer Actions */}
                 <div className="pt-5 border-t border-slate-800/80 flex items-center justify-between">
-                  <div className="flex items-center gap-4 text-xs text-slate-400 font-mono">
+                  <div className="flex items-center gap-3 text-xs text-slate-400 font-mono">
                     <span className="flex items-center gap-1">
                       <Clock className="w-3.5 h-3.5 text-slate-500" />
                       {article.readTime}
@@ -250,19 +333,39 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
         })}
       </div>
 
+      {/* Empty State */}
       {filteredArticles.length === 0 && (
         <div className="text-center py-16 bg-[#080d19]/40 rounded-2xl border border-slate-800">
-          <p className="text-slate-400 text-sm">
+          <p className="text-slate-400 text-sm mb-4">
             Aradığınız kriterlere uygun kozmik metin bulunamadı.
           </p>
-          <button
-            onClick={() => {
-              onSelectCategory('all');
-            }}
-            className="mt-4 px-4 py-2 rounded-full text-xs text-[#00f0ff] border border-[#00f0ff]/40 hover:bg-[#00f0ff]/10"
-          >
-            Tüm Külliyatı Göster
-          </button>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {selectedPeriod !== 'all' && (
+              <button
+                onClick={() => setSelectedPeriod('all')}
+                className="px-4 py-2 rounded-full text-xs text-amber-300 border border-amber-400/40 hover:bg-amber-400/10 cursor-pointer transition-all"
+              >
+                Kozmik Dönem Filtresini Sıfırla
+              </button>
+            )}
+            {selectedCategory !== 'all' && (
+              <button
+                onClick={() => onSelectCategory('all')}
+                className="px-4 py-2 rounded-full text-xs text-purple-300 border border-purple-400/40 hover:bg-purple-400/10 cursor-pointer transition-all"
+              >
+                Kategori Filtresini Sıfırla
+              </button>
+            )}
+            <button
+              onClick={() => {
+                onSelectCategory('all');
+                setSelectedPeriod('all');
+              }}
+              className="px-4 py-2 rounded-full text-xs text-[#00f0ff] border border-[#00f0ff]/40 hover:bg-[#00f0ff]/10 cursor-pointer transition-all"
+            >
+              Tüm Külliyatı Göster
+            </button>
+          </div>
         </div>
       )}
     </section>
