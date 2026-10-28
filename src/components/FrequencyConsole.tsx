@@ -1,302 +1,409 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Radio, X, Volume2, Play, Pause, Activity, Sparkles } from 'lucide-react';
+import React, { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import {
+  Radio,
+  X,
+  Volume2,
+  Play,
+  Pause,
+  Sparkles,
+  Waves,
+  Target,
+  Flame,
+  CloudRain,
+  Moon,
+  Activity,
+  Music,
+  Leaf,
+  Headphones,
+  Timer,
+  Info,
+} from 'lucide-react';
 import { RESONANCE_TRACKS } from '../data/cosmicData';
-import { ResonanceTrack } from '../types';
+import { ambient, LayerKey } from '../audio/ambientEngine';
+import { MOODS, MoodId } from '../audio/moods';
 
 interface FrequencyConsoleProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+const MOOD_ICONS: Record<MoodId, React.ElementType> = {
+  sakin: Waves,
+  odak: Target,
+  motivasyon: Flame,
+  huzun: CloudRain,
+  uyku: Moon,
+};
+
+const LAYERS: { key: LayerKey; label: string; icon: React.ElementType }[] = [
+  { key: 'pulse', label: 'Ritim', icon: Activity },
+  { key: 'melody', label: 'Melodi', icon: Music },
+  { key: 'nature', label: 'Doğa sesi', icon: Leaf },
+  { key: 'binaural', label: 'Binaural', icon: Headphones },
+];
+
+const SLEEP_OPTIONS = [0, 15, 30, 60];
+
+export const useAmbient = () => useSyncExternalStore(ambient.subscribe, ambient.getState);
+
 export const FrequencyConsole: React.FC<FrequencyConsoleProps> = ({ isOpen, onClose }) => {
-  const [selectedTrack, setSelectedTrack] = useState<ResonanceTrack>(RESONANCE_TRACKS[0]);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.2);
-
-  // Web Audio refs
-  const audioCtxRef = useRef<AudioContext | null>(null);
-  const oscRef = useRef<OscillatorNode | null>(null);
-  const gainRef = useRef<GainNode | null>(null);
+  const s = useAmbient();
+  const [tab, setTab] = useState<'mood' | 'tone'>('mood');
+  const [selectedMood, setSelectedMood] = useState<MoodId>(s.moodId);
+  const [sleepMinutes, setSleepMinutes] = useState(0);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const animationFrameRef = useRef<number | null>(null);
 
-  // Initialize and update Web Audio synth
+  const mood = MOODS.find((m) => m.id === (s.mode === 'mood' ? s.moodId : selectedMood)) ?? MOODS[0];
+  const moodPlaying = s.playing && s.mode === 'mood';
+
   useEffect(() => {
-    if (!isPlaying) {
-      if (oscRef.current && gainRef.current) {
-        try {
-          const now = audioCtxRef.current ? audioCtxRef.current.currentTime : 0;
-          gainRef.current.gain.setTargetAtTime(0, now, 0.08);
-          setTimeout(() => {
-            if (oscRef.current) {
-              oscRef.current.stop();
-              oscRef.current.disconnect();
-              oscRef.current = null;
-            }
-          }, 120);
-        } catch {
-          // ignore cleanup errors
-        }
-      }
-      return;
-    }
+    if (s.mode === 'mood') setSelectedMood(s.moodId);
+  }, [s.mode, s.moodId]);
 
-    try {
-      const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      if (!audioCtxRef.current) {
-        audioCtxRef.current = new AudioContextClass();
-      }
-      const ctx = audioCtxRef.current;
-      if (ctx.state === 'suspended') {
-        ctx.resume();
-      }
-
-      // If already playing, stop previous oscillator
-      if (oscRef.current) {
-        oscRef.current.stop();
-        oscRef.current.disconnect();
-      }
-
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      // If frequency is very low (e.g. 7.83 Hz), play a pleasant carrier (136.1 Hz Ohm tone) modulated by 7.83Hz
-      if (selectedTrack.freq < 20) {
-        osc.frequency.setValueAtTime(136.1, ctx.currentTime); // Earth tone carrier
-      } else {
-        osc.frequency.setValueAtTime(selectedTrack.freq, ctx.currentTime);
-      }
-
-      osc.type = 'sine';
-
-      gain.gain.setValueAtTime(0.001, ctx.currentTime);
-      gain.gain.setTargetAtTime(volume, ctx.currentTime, 0.1);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start();
-      oscRef.current = osc;
-      gainRef.current = gain;
-    } catch (e) {
-      console.error('Web Audio init error:', e);
-    }
-
-    return () => {
-      // cleanup on unmount
-    };
-  }, [isPlaying, selectedTrack]);
-
-  // Update volume
   useEffect(() => {
-    if (gainRef.current && audioCtxRef.current && isPlaying) {
-      gainRef.current.gain.setTargetAtTime(volume, audioCtxRef.current.currentTime, 0.05);
-    }
-  }, [volume, isPlaying]);
+    if (!s.sleepEndsAt) setSleepMinutes(0);
+  }, [s.sleepEndsAt]);
 
-  // Clean up audio on close
+  // Escape ile kapat
   useEffect(() => {
-    if (!isOpen && isPlaying) {
-      setIsPlaying(false);
-    }
-  }, [isOpen]);
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen, onClose]);
 
-  // Canvas wave visualization
+  // Canlı görselleştirici: gerçek ses çıkışını çizer
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas || !isOpen) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    const g = canvas.getContext('2d');
+    if (!g) return;
+    let raf = 0;
+    let freqData: Uint8Array<ArrayBuffer> | null = null;
+    let timeData: Uint8Array<ArrayBuffer> | null = null;
 
-    let phase = 0;
-
-    const render = () => {
-      const width = (canvas.width = canvas.parentElement?.clientWidth || 400);
-      const height = (canvas.height = 100);
-
-      ctx.clearRect(0, 0, width, height);
-
-      // Center baseline
-      ctx.beginPath();
-      ctx.strokeStyle = 'rgba(0, 240, 255, 0.1)';
-      ctx.lineWidth = 1;
-      ctx.moveTo(0, height / 2);
-      ctx.lineTo(width, height / 2);
-      ctx.stroke();
-
-      if (isPlaying) {
-        // Draw primary resonant sine wave
-        ctx.beginPath();
-        ctx.strokeStyle = '#00f0ff';
-        ctx.lineWidth = 2;
-        ctx.shadowColor = '#00f0ff';
-        ctx.shadowBlur = 12;
-
-        const waveFreq = selectedTrack.freq > 100 ? (selectedTrack.freq / 80) : 4;
-        const amplitude = Math.min(35, volume * 90);
-
-        for (let x = 0; x < width; x++) {
-          const y = height / 2 + Math.sin(x * 0.035 * (waveFreq / 4) + phase) * amplitude;
-          if (x === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-
-        // Secondary harmonic wave in purple
-        ctx.beginPath();
-        ctx.strokeStyle = '#b000ff';
-        ctx.lineWidth = 1.5;
-        ctx.shadowColor = '#b000ff';
-        ctx.shadowBlur = 8;
-        for (let x = 0; x < width; x++) {
-          const y = height / 2 + Math.cos(x * 0.05 * (waveFreq / 4) - phase * 1.5) * (amplitude * 0.6);
-          if (x === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
-        ctx.stroke();
-
-        phase += 0.08;
-      } else {
-        // Flat resting line
-        ctx.beginPath();
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-        ctx.lineWidth = 1;
-        ctx.moveTo(0, height / 2);
-        ctx.lineTo(width, height / 2);
-        ctx.stroke();
+    const draw = () => {
+      const dpr = window.devicePixelRatio || 1;
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      if (canvas.width !== w * dpr) {
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
       }
+      g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      g.clearRect(0, 0, w, h);
+      const an = ambient.analyser;
+      const accent = s.mode === 'tone' ? '#b000ff' : mood.accent;
 
-      animationFrameRef.current = requestAnimationFrame(render);
+      if (an && s.playing) {
+        if (!freqData || freqData.length !== an.frequencyBinCount) {
+          freqData = new Uint8Array(an.frequencyBinCount);
+          timeData = new Uint8Array(an.fftSize);
+        }
+        an.getByteFrequencyData(freqData);
+        an.getByteTimeDomainData(timeData!);
+
+        // Frekans çubukları (logaritmik), ortadan aynalı
+        const bars = Math.floor(w / 6);
+        for (let i = 0; i < bars; i++) {
+          const pos = Math.pow(i / bars, 2) * freqData.length * 0.5;
+          const v = freqData[Math.floor(pos)] / 255;
+          const bh = v * h * 0.45;
+          g.fillStyle = accent;
+          g.globalAlpha = 0.15 + v * 0.55;
+          g.fillRect(i * 6, h / 2 - bh, 4, bh * 2);
+        }
+        g.globalAlpha = 1;
+
+        // Dalga biçimi
+        g.beginPath();
+        g.strokeStyle = '#ffffff';
+        g.lineWidth = 1.5;
+        g.shadowColor = accent;
+        g.shadowBlur = 10;
+        const td = timeData!;
+        for (let x = 0; x < w; x++) {
+          const v = td[Math.floor((x / w) * td.length)] / 128 - 1;
+          const y = h / 2 + v * h * 0.8;
+          if (x === 0) g.moveTo(x, y);
+          else g.lineTo(x, y);
+        }
+        g.stroke();
+        g.shadowBlur = 0;
+      } else {
+        g.strokeStyle = 'rgba(255,255,255,0.2)';
+        g.lineWidth = 1;
+        g.beginPath();
+        g.moveTo(0, h / 2);
+        g.lineTo(w, h / 2);
+        g.stroke();
+      }
+      raf = requestAnimationFrame(draw);
     };
-
-    render();
-
-    return () => {
-      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
-    };
-  }, [isOpen, isPlaying, selectedTrack, volume]);
+    draw();
+    return () => cancelAnimationFrame(raf);
+  }, [isOpen, s.playing, s.mode, mood.accent]);
 
   if (!isOpen) return null;
+
+  const pickMood = (id: MoodId) => {
+    setSelectedMood(id);
+    if (s.playing) ambient.startMood(id);
+  };
+
+  const togglePlay = () => {
+    if (moodPlaying) ambient.stop();
+    else ambient.startMood(selectedMood);
+  };
+
+  const remaining = s.sleepEndsAt ? Math.max(0, Math.ceil((s.sleepEndsAt - Date.now()) / 60000)) : 0;
 
   return (
     <div
       id="frequency-modal"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-black/80 backdrop-blur-xl"
+      onClick={onClose}
     >
-      <div className="relative w-full max-w-2xl bg-[#060914] border border-[#b000ff]/40 rounded-3xl p-6 sm:p-8 shadow-[0_0_60px_rgba(176,0,255,0.25)] overflow-hidden">
-        {/* Glow corner */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#b000ff]/20 via-[#00f0ff]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto bg-[#060914] border border-[#b000ff]/40 rounded-t-3xl sm:rounded-3xl p-5 sm:p-8 shadow-[0_0_60px_rgba(176,0,255,0.25)]"
+      >
+        <div
+          className="absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl pointer-events-none opacity-30 transition-colors duration-1000"
+          style={{ background: s.mode === 'tone' ? '#b000ff' : mood.accent }}
+        />
 
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
+        {/* Başlık */}
+        <div className="relative flex items-center justify-between mb-5 pb-4 border-b border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-[#0e081e] border border-[#b000ff]/40 shadow-[0_0_15px_rgba(176,0,255,0.3)]">
-              <Radio className="w-5 h-5 text-[#b000ff] animate-pulse" />
+            <div className="p-2.5 rounded-xl bg-[#0e081e] border border-[#b000ff]/40">
+              <Radio className={`w-5 h-5 text-[#b000ff] ${s.playing ? 'animate-pulse' : ''}`} />
             </div>
             <div>
-              <h3 className="font-cinzel text-xl font-bold text-white flex items-center gap-2">
+              <h3 className="font-cinzel text-lg sm:text-xl font-bold text-white flex items-center gap-2">
                 Frekans & Rezonans Odası
                 <Sparkles className="w-4 h-4 text-[#00f0ff]" />
               </h3>
               <p className="text-xs text-slate-400 font-mono">
-                Biyo-elektromanyetik Armonik Dalga Sentezleyicisi
+                {s.tuning} Hz akortlu, canlı üretilen ambient müzik
               </p>
             </div>
           </div>
-
           <button
             onClick={onClose}
+            aria-label="Kapat"
             className="p-2 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Waveform Visualizer */}
-        <div className="mb-6 p-4 rounded-2xl bg-[#03050a] border border-[#00f0ff]/25 relative overflow-hidden shadow-inner">
-          <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-2">
-            <span className="flex items-center gap-1.5 text-[#00f0ff]">
-              <Activity className="w-3.5 h-3.5" />
-              Canlı Dalga Biçimi: {selectedTrack.freq} Hz
-            </span>
-            <span>{isPlaying ? 'REZONANS AKTİF' : 'BEKLEMEDE'}</span>
-          </div>
-
-          <div className="w-full h-24 flex items-center justify-center">
-            <canvas ref={canvasRef} className="w-full h-full" />
-          </div>
-        </div>
-
-        {/* Track Selection */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-          {RESONANCE_TRACKS.map((track) => {
-            const isSelected = selectedTrack.id === track.id;
-            return (
-              <button
-                key={track.id}
-                onClick={() => setSelectedTrack(track)}
-                className={`text-left p-4 rounded-xl border transition-all cursor-pointer ${
-                  isSelected
-                    ? 'bg-[#0f0e26] border-[#b000ff] shadow-[0_0_20px_rgba(176,0,255,0.3)]'
-                    : 'bg-[#060a14]/60 border-slate-800 hover:border-slate-700 hover:bg-[#090f1f]'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <span className="font-cinzel text-sm font-bold text-white">
-                    {track.name}
-                  </span>
-                  <span className="text-[11px] font-mono text-[#00f0ff] px-2 py-0.5 rounded bg-[#00f0ff]/10">
-                    {track.freq} Hz
-                  </span>
-                </div>
-                <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed font-light">
-                  {track.description}
-                </p>
-                <div className="mt-2 text-[10px] font-mono text-purple-300">
-                  {track.harmonicNote}
-                </div>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Player Controls */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-[#090e1c]/80 border border-slate-800">
-          <div className="flex items-center gap-3">
+        {/* Sekmeler */}
+        <div className="relative flex gap-2 mb-5 p-1 rounded-full bg-[#03050a] border border-slate-800 w-fit">
+          {(
+            [
+              ['mood', 'Ruh Hali Müzikleri'],
+              ['tone', 'Saf Tonlar'],
+            ] as const
+          ).map(([id, label]) => (
             <button
-              onClick={() => setIsPlaying(!isPlaying)}
-              className={`px-5 py-2.5 rounded-full font-medium text-xs tracking-wider flex items-center gap-2 transition-all cursor-pointer ${
-                isPlaying
-                  ? 'bg-[#00ff88] text-black font-semibold shadow-[0_0_20px_rgba(0,255,136,0.6)]'
-                  : 'bg-[#00f0ff] text-black font-semibold shadow-[0_0_20px_rgba(0,240,255,0.6)]'
+              key={id}
+              onClick={() => setTab(id)}
+              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                tab === id ? 'bg-white text-black' : 'text-slate-400 hover:text-white'
               }`}
             >
-              {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-              <span>{isPlaying ? 'Titreşimi Duraklat' : 'Frekansı Başlat'}</span>
+              {label}
             </button>
+          ))}
+        </div>
 
-            <span className="text-xs font-mono text-slate-400">
-              {isPlaying ? 'Saf Sinüs Dalga Akordu' : 'Oynatmaya Hazır'}
+        {/* Görselleştirici */}
+        <div className="relative mb-5 p-3 rounded-2xl bg-[#03050a] border border-[#00f0ff]/20">
+          <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-1">
+            <span style={{ color: s.mode === 'tone' ? '#c084fc' : mood.accent }}>
+              {s.mode === 'tone'
+                ? `Saf ton: ${s.toneFreq} Hz`
+                : s.mode === 'mood'
+                  ? `${mood.name} · ${mood.bpm} vuruş/dk`
+                  : 'Beklemede'}
+            </span>
+            <span>
+              {s.playing ? 'YAYINDA' : 'SESSİZ'}
+              {remaining > 0 && ` · ${remaining} dk sonra kapanır`}
             </span>
           </div>
+          <canvas ref={canvasRef} className="w-full h-24 block" />
+        </div>
 
-          {/* Volume control */}
+        {tab === 'mood' ? (
+          <>
+            {/* Ruh hali kartları */}
+            <div className="relative grid grid-cols-2 sm:grid-cols-5 gap-2 mb-4">
+              {MOODS.map((m) => {
+                const Icon = MOOD_ICONS[m.id];
+                const active = selectedMood === m.id;
+                return (
+                  <button
+                    key={m.id}
+                    onClick={() => pickMood(m.id)}
+                    className={`p-3 rounded-xl border text-left sm:text-center transition-all cursor-pointer ${
+                      active ? 'bg-[#0f0e26]' : 'bg-[#060a14]/60 border-slate-800 hover:border-slate-600'
+                    } ${m.id === 'uyku' ? 'col-span-2 sm:col-span-1' : ''}`}
+                    style={
+                      active ? { borderColor: m.accent, boxShadow: `0 0 18px ${m.accent}55` } : undefined
+                    }
+                  >
+                    <Icon className="w-5 h-5 mb-1.5 sm:mx-auto" style={{ color: m.accent }} />
+                    <div className="font-cinzel text-sm font-bold text-white">{m.name}</div>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="relative mb-4 px-1">
+              <div className="text-[11px] font-mono mb-1" style={{ color: mood.accent }}>
+                {mood.tagline}
+              </div>
+              <p className="text-sm text-slate-300 font-light leading-relaxed">{mood.description}</p>
+            </div>
+
+            {/* Katmanlar */}
+            <div className="relative flex flex-wrap gap-2 mb-4">
+              {LAYERS.map(({ key, label, icon: Icon }) => {
+                const unavailable =
+                  (key === 'nature' && mood.nature === 'none') || (key === 'pulse' && mood.pulse === 'none');
+                const on = s.layers[key] && !unavailable;
+                return (
+                  <button
+                    key={key}
+                    disabled={unavailable}
+                    onClick={() => ambient.setLayer(key, !s.layers[key])}
+                    title={key === 'binaural' ? `Kulaklıkla dinleyin: iki kulak arasında ${mood.binauralBeat} Hz fark` : undefined}
+                    className={`px-3 py-1.5 rounded-full text-xs border flex items-center gap-1.5 transition-all ${
+                      unavailable
+                        ? 'opacity-30 cursor-not-allowed border-slate-800 text-slate-500'
+                        : on
+                          ? 'border-white/60 text-white bg-white/10 cursor-pointer'
+                          : 'border-slate-700 text-slate-400 hover:text-white cursor-pointer'
+                    }`}
+                  >
+                    <Icon className="w-3.5 h-3.5" />
+                    {label}
+                    {key === 'binaural' && on && <span className="font-mono text-[10px]">{mood.binauralBeat} Hz</span>}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Akort + zamanlayıcı */}
+            <div className="relative flex flex-wrap items-center gap-x-5 gap-y-3 mb-5 text-xs text-slate-400">
+              <div className="flex items-center gap-2">
+                <span>Akort</span>
+                {([432, 440] as const).map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => ambient.setTuning(t)}
+                    className={`px-2.5 py-1 rounded-md font-mono cursor-pointer border ${
+                      s.tuning === t ? 'border-[#00f0ff] text-[#00f0ff]' : 'border-slate-800 hover:text-white'
+                    }`}
+                  >
+                    {t} Hz
+                  </button>
+                ))}
+              </div>
+              <div className="flex items-center gap-2">
+                <Timer className="w-3.5 h-3.5" />
+                <span>Kapat</span>
+                {SLEEP_OPTIONS.map((m) => (
+                  <button
+                    key={m}
+                    onClick={() => {
+                      setSleepMinutes(m);
+                      ambient.setSleepTimer(m);
+                    }}
+                    className={`px-2 py-1 rounded-md font-mono cursor-pointer border ${
+                      sleepMinutes === m ? 'border-[#00f0ff] text-[#00f0ff]' : 'border-slate-800 hover:text-white'
+                    }`}
+                  >
+                    {m === 0 ? 'yok' : `${m} dk`}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+              {RESONANCE_TRACKS.map((track) => {
+                const active = s.mode === 'tone' && s.toneFreq === track.freq;
+                return (
+                  <button
+                    key={track.id}
+                    onClick={() => (active ? ambient.stop() : ambient.startTone(track.freq))}
+                    className={`text-left p-4 rounded-xl border transition-all cursor-pointer ${
+                      active
+                        ? 'bg-[#0f0e26] border-[#b000ff] shadow-[0_0_20px_rgba(176,0,255,0.3)]'
+                        : 'bg-[#060a14]/60 border-slate-800 hover:border-slate-700'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="font-cinzel text-sm font-bold text-white">{track.name}</span>
+                      <span className="text-[11px] font-mono text-[#00f0ff] px-2 py-0.5 rounded bg-[#00f0ff]/10 flex items-center gap-1">
+                        {active ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
+                        {track.freq} Hz
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-400 leading-relaxed font-light">{track.description}</p>
+                  </button>
+                );
+              })}
+            </div>
+            <p className="relative text-[11px] text-slate-500 mb-5 px-1 leading-relaxed">
+              Bunlar tek bir sinüs dalgasıdır. Geleneksel olarak anlam yüklenen bu tonların ruh hali üzerinde
+              kendi başlarına belirgin bir etkisi bilimsel olarak gösterilmemiştir; ruh halini asıl etkileyen
+              akor, ritim ve melodidir. 7.83 Hz duyulamadığı için iki kulağa farklı tonlarla (kulaklıkla) verilir.
+            </p>
+          </>
+        )}
+
+        {/* Oynatıcı */}
+        <div className="relative flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-[#090e1c]/80 border border-slate-800">
+          {tab === 'mood' ? (
+            <button
+              onClick={togglePlay}
+              className="w-full sm:w-auto px-6 py-3 rounded-full font-semibold text-sm tracking-wide flex items-center justify-center gap-2 transition-all cursor-pointer text-black"
+              style={{ background: mood.accent, boxShadow: `0 0 22px ${mood.accent}99` }}
+            >
+              {moodPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+              {moodPlaying ? 'Durdur' : `${mood.name} müziğini başlat`}
+            </button>
+          ) : (
+            <span className="text-xs text-slate-400">Bir tona dokunarak başlatın veya durdurun.</span>
+          )}
+
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <Volume2 className="w-4 h-4 text-slate-400" />
             <input
               type="range"
               min="0"
-              max="0.5"
+              max="1"
               step="0.01"
-              value={volume}
-              onChange={(e) => setVolume(parseFloat(e.target.value))}
-              className="w-full sm:w-28 accent-[#00f0ff] cursor-pointer"
+              value={s.volume}
+              onChange={(e) => ambient.setVolume(parseFloat(e.target.value))}
+              className="w-full sm:w-32 accent-[#00f0ff] cursor-pointer"
+              aria-label="Ses seviyesi"
             />
-            <span className="text-xs font-mono text-slate-400 w-8">
-              {Math.round(volume * 200)}%
-            </span>
           </div>
         </div>
+
+        {tab === 'mood' && (
+          <p className="relative mt-4 text-[11px] text-slate-500 flex gap-2 leading-relaxed">
+            <Info className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+            Müzik tarayıcınızda her an yeniden üretilir, hiç tekrar etmez. Tıbbi bir iddia taşımaz; etkisi kişiden
+            kişiye değişir. Binaural katmanı için kulaklık gerekir.
+          </p>
+        )}
       </div>
     </div>
   );

@@ -115,7 +115,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             }`}
           >
             <Zap className="w-3.5 h-3.5" />
-            <span>{isAudioPlaying ? '432 Hz Yayında' : '432 Hz Sinyal Ver'}</span>
+            <span>{isAudioPlaying ? 'Ambient Yayında' : 'Sakin Ambient Dinle'}</span>
           </button>
         </div>
 

@@ -1,10 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { CosmicBackground } from './components/CosmicBackground';
 import { StardustCursor } from './components/StardustCursor';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { ContentGrid } from './components/ContentGrid';
-import { FrequencyConsole } from './components/FrequencyConsole';
+import { FrequencyConsole, useAmbient } from './components/FrequencyConsole';
+import { ambient } from './audio/ambientEngine';
 import { ArticleModal } from './components/ArticleModal';
 import { Footer } from './components/Footer';
 import { CATEGORIES, ARTICLES } from './data/cosmicData';
@@ -16,75 +17,14 @@ export default function App() {
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const [frequencyConsoleOpen, setFrequencyConsoleOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const audio = useAmbient();
+  const isAudioPlaying = audio.playing;
 
-  // Global ambient Web Audio oscillator for 432 Hz
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const ambientOscRef = useRef<OscillatorNode | null>(null);
-  const ambientGainRef = useRef<GainNode | null>(null);
-
+  // Üst menüdeki ses düğmesi: "Sakin" ambient müziği açar/kapatır.
   const toggleAmbientAudio = () => {
-    if (isAudioPlaying) {
-      if (ambientGainRef.current && audioContextRef.current) {
-        ambientGainRef.current.gain.setTargetAtTime(0, audioContextRef.current.currentTime, 0.1);
-        setTimeout(() => {
-          if (ambientOscRef.current) {
-            ambientOscRef.current.stop();
-            ambientOscRef.current.disconnect();
-            ambientOscRef.current = null;
-          }
-          setIsAudioPlaying(false);
-        }, 150);
-      } else {
-        setIsAudioPlaying(false);
-      }
-    } else {
-      try {
-        const AudioContextClass =
-          window.AudioContext ||
-          (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-        if (!audioContextRef.current) {
-          audioContextRef.current = new AudioContextClass();
-        }
-        const ctx = audioContextRef.current;
-        if (ctx.state === 'suspended') {
-          ctx.resume();
-        }
-
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(432, ctx.currentTime); // 432 Hz Universal Tuner
-
-        gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-        gain.gain.setTargetAtTime(0.12, ctx.currentTime, 0.2);
-
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-
-        osc.start();
-        ambientOscRef.current = osc;
-        ambientGainRef.current = gain;
-        setIsAudioPlaying(true);
-      } catch (err) {
-        console.error('Audio initialization error:', err);
-      }
-    }
+    if (audio.playing) ambient.stop();
+    else ambient.startMood('sakin');
   };
-
-  useEffect(() => {
-    return () => {
-      if (ambientOscRef.current) {
-        try {
-          ambientOscRef.current.stop();
-          ambientOscRef.current.disconnect();
-        } catch {
-          // ignore cleanup errors
-        }
-      }
-    };
-  }, []);
 
   const scrollToContent = () => {
     const el = document.getElementById('icerik-alani');
@@ -163,7 +103,7 @@ export default function App() {
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-xs font-mono text-[#b000ff] flex items-center gap-1.5">
                     <Radio className="w-4 h-4" />
-                    Canlı Sinyal Jeneratörü
+                    Canlı Ambient Jeneratörü
                   </span>
                   <span className="text-[10px] font-mono bg-[#00ff88]/10 text-[#00ff88] border border-[#00ff88]/30 px-2 py-0.5 rounded">
                     432 Hz Kalibre
@@ -174,16 +114,16 @@ export default function App() {
                   <div className="flex items-center justify-between text-xs text-slate-300">
                     <span className="flex items-center gap-2">
                       <Waves className="w-4 h-4 text-[#00f0ff]" />
-                      Taşıyıcı Dalga
+                      Müzik Modları
                     </span>
-                    <span className="font-mono text-[#00f0ff]">Saf Sinüs</span>
+                    <span className="font-mono text-[#00f0ff]">5 Ruh Hali</span>
                   </div>
                   <div className="flex items-center justify-between text-xs text-slate-300">
                     <span className="flex items-center gap-2">
                       <Activity className="w-4 h-4 text-[#b000ff]" />
-                      Biyofotonik Faz
+                      Katmanlar
                     </span>
-                    <span className="font-mono text-purple-300">Koherent 1.618</span>
+                    <span className="font-mono text-purple-300">Ritim · Melodi · Doğa</span>
                   </div>
                 </div>
 
