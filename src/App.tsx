@@ -7,6 +7,7 @@ import { ContentGrid } from './components/ContentGrid';
 import { FrequencyConsole, useAmbient } from './components/FrequencyConsole';
 import { ambient } from './audio/ambientEngine';
 import { ArticleModal } from './components/ArticleModal';
+import { MoodSection } from './components/MoodSection';
 import { Footer } from './components/Footer';
 import { CATEGORIES, ARTICLES } from './data/cosmicData';
 import { CategoryId, Article } from './types';
@@ -138,6 +139,9 @@ export default function App() {
             </div>
           </div>
         </section>
+
+        {/* Sesin İnsana Tesiri: ruh hali müzikleri */}
+        <MoodSection onOpenConsole={() => setFrequencyConsoleOpen(true)} />
 
         {/* Content Grid (Categories & Featured Articles) */}
         <ContentGrid

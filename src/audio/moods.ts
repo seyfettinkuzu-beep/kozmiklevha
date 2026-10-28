@@ -33,6 +33,11 @@ export interface Mood {
   binauralBeat: number;
   binauralCarrier: number;
   defaults: { pulse: boolean; melody: boolean; nature: boolean; binaural: boolean };
+  /** Bu sesin insana nasıl tesir ettiği (sade ve dürüst anlatım). */
+  effectTitle: string;
+  effects: { title: string; text: string }[];
+  /** Duyguya eşlik eden sözler (özgün). */
+  words: string[];
 }
 
 export const MOODS: Mood[] = [
@@ -62,6 +67,20 @@ export const MOODS: Mood[] = [
     binauralBeat: 10,
     binauralCarrier: 50,
     defaults: { pulse: true, melody: true, nature: true, binaural: false },
+    effectTitle: 'Yavaş ritim, yavaşlayan nefes',
+    effects: [
+      { title: 'Tempo nefesi sürükler', text: 'Dakikada 60 vuruş, dinlenen bir kalbin hızına yakındır. Beden yavaş bir ritme kendiliğinden uyum sağlamaya meyillidir; nefes uzar, omuzlar iner.' },
+      { title: 'Sürpriz yok, tehlike yok', text: 'Akorlar yumuşakça birbirine geçer, ani ses yoktur. Beyin çevreyi sürekli tehlikeye karşı tarar; tahmin edilebilir sesler ona "her şey yolunda" der.' },
+      { title: 'Dalga sesi zihni boşaltır', text: 'Düzenli kabarıp çekilen dalga sesi, dikkatini dağıtan diğer küçük sesleri örter ve düşüncelerin arka plana çekilmesine yardım eder.' },
+    ],
+    words: [
+      'Her şeyi bugün çözmek zorunda değilsin. Şu an sadece nefes al.',
+      'Dalga gelir, dalga gider. Sen kıyısın; kalırsın.',
+      'Yavaşlamak geri kalmak değildir. Bazen en hızlı yol, durup dinlemektir.',
+      'Omuzlarını bırak. Taşıdığın yükün bir kısmını bu an yere koyabilirsin.',
+      'Gökyüzü fırtınayı da taşır, maviliği de. İkisi de geçer, gökyüzü kalır.',
+      'Bir nefes al, dört saniye tut, yavaşça bırak. Sakinlik bir yer değil, bir yoldur.',
+    ],
   },
   {
     id: 'odak',
@@ -89,6 +108,20 @@ export const MOODS: Mood[] = [
     binauralBeat: 14,
     binauralCarrier: 48,
     defaults: { pulse: false, melody: true, nature: true, binaural: false },
+    effectTitle: 'Tahmin edilebilir ses, serbest kalan zihin',
+    effects: [
+      { title: 'Tekrar, dikkati korur', text: 'Arpej hep aynı düzende döner. Beyin onu kısa sürede çözer ve takip etmeyi bırakır; kalan dikkat işine kalır. Sözsüz müzik bu yüzden çalışırken daha az böler.' },
+      { title: 'Yağmur, gürültüyü örter', text: 'Geniş frekanslı yağmur sesi, telefon titreşimi ya da uzaktaki konuşma gibi dikkat dağıtıcı sesleri yumuşak bir perdeyle kapatır.' },
+      { title: 'Ritim bir saat gibi çalışır', text: 'Sabit tempo, zaman algısına bir çerçeve verir. Birçok kişi düzenli bir ritimle işe daha kolay başladığını ve daha uzun devam ettiğini fark eder.' },
+    ],
+    words: [
+      'Tek bir iş. Tek bir adım. Şimdi sadece önündeki satır var.',
+      'Odak bir kas gibidir; her geri dönüşte biraz daha güçlenir.',
+      'Dağılan dikkatini suçlama, nazikçe geri çağır. Bu da odaklanmaktır.',
+      'Büyük işler, küçük ve sıkıcı dakikaların toplamıdır.',
+      'Şu an yaptığın şey, yarınki seni kuruyor.',
+      'Kusursuz yapmaya değil, bitirmeye odaklan. Düzeltmek sonra gelir.',
+    ],
   },
   {
     id: 'motivasyon',
@@ -116,6 +149,21 @@ export const MOODS: Mood[] = [
     binauralBeat: 18,
     binauralCarrier: 52,
     defaults: { pulse: true, melody: true, nature: false, binaural: false },
+    effectTitle: 'Ritim bedeni harekete çağırır',
+    effects: [
+      { title: 'Vuruş, adımı çeker', text: 'Dakikada 110–130 vuruş tempolu yürüyüş ve koşu hızına yakındır. İnsanlar adımlarını farkında olmadan ritme uydurur; hareket kolaylaşır.' },
+      { title: 'Müzik yorgunluğu örter', text: 'Spor sırasında ritmik müzik dinleyenler, aynı eforu daha az yorucu algıladıklarını söyler. Dikkat bedendeki sinyallerden müziğe kayar.' },
+      { title: 'Majör ve yükselen dizi', text: 'I–V–vi–IV akor dizisi popüler marşların ve şarkıların iskeletidir. Kulağımız bu çözülmeleri "ilerleme" ve "zafer" duygusuyla ilişkilendirmeyi öğrenmiştir.' },
+    ],
+    words: [
+      'Başlamak için hazır hissetmeyi bekleme. Başla, hazır olma hissi yolda gelir.',
+      'Dün yapamadığın şey, bugün sadece bir deneme uzağında.',
+      'Yorulduğunda durma, dinlen. Bırakmak başka, nefeslenmek başka.',
+      'Kimse seni senin kadar iyi tanımıyor. Sınırlarını da sen çizmezsen kimse çizemez.',
+      'Bir adım daha. Sonra bir adım daha. Dağlar böyle aşılır.',
+      'Zorluk seni durdurmak için değil, ne kadar güçlü olduğunu göstermek için orada.',
+      'Mükemmel gün yok. Sadece bugün var ve bugün yeterince iyi.',
+    ],
   },
   {
     id: 'huzun',
@@ -143,6 +191,20 @@ export const MOODS: Mood[] = [
     binauralBeat: 6,
     binauralCarrier: 45,
     defaults: { pulse: false, melody: true, nature: true, binaural: false },
+    effectTitle: 'Hüzünlü müzik neden iyi gelir?',
+    effects: [
+      { title: 'Duygu karşılık bulur', text: 'Üzgünken neşeli müzik çoğu zaman uzak gelir. Minör akorlar duygunu yansıttığında anlaşıldığını hissedersin; araştırmalar hüzünlü müziğin birçok kişiye teselli verdiğini gösteriyor.' },
+      { title: 'Güvenli bir hüzün', text: 'Müzikteki hüzün gerçek bir kayıp taşımaz. Bu yüzden kişi duygusuna güvenle yaklaşabilir, ağlayabilir, rahatlayabilir. Buna "hüzünlü müzik paradoksu" denir.' },
+      { title: 'Seyrek notalar, düşünmeye alan', text: 'Piyano notaları arasında bırakılan boşluklar, zihne kendi anılarını ve düşüncelerini yerleştirebileceği yer açar.' },
+    ],
+    words: [
+      'Hüzün de bir misafirdir. Kapıyı açarsan oturur, dinlenir ve gider.',
+      'Ağlamak zayıflık değil; kalbin kendini temizleme biçimidir.',
+      'Kaybettiğin şeyi bu kadar özlüyorsan, onu ne kadar sevdiğindendir.',
+      'Bugün iyi olmak zorunda değilsin. Sadece bugünü geçirmen yeterli.',
+      'Yağmurdan sonra toprak daha güzel kokar.',
+      'En karanlık gece bile sabahı durduramaz.',
+    ],
   },
   {
     id: 'uyku',
@@ -170,6 +232,20 @@ export const MOODS: Mood[] = [
     binauralBeat: 4,
     binauralCarrier: 41,
     defaults: { pulse: false, melody: true, nature: true, binaural: false },
+    effectTitle: 'Yavaşlayan ses, gevşeyen beden',
+    effects: [
+      { title: 'Ritim yok, uyanıklık sinyali yok', text: 'Uyku modunda davul ya da belirgin vuruş yoktur. Beynin takip edeceği bir olay olmadığında dikkat kendiliğinden gevşer.' },
+      { title: 'Okyanus sesi, gece seslerini örter', text: 'Yavaş dalga sesi, araba ya da kapı gibi ani gece seslerini maskeler. Düzenli arka plan sesi uykunun bölünmesini azaltabilir.' },
+      { title: 'Zamanlayıcı ile yavaşça sessizlik', text: 'Ses son 30 saniyede kısılarak kapanır; ani bir kesinti seni uyandırmaz. 30 dakika çoğu kişi için yeterlidir.' },
+    ],
+    words: [
+      'Bugün olanlar bugünde kaldı. Yarın yeni bir sayfa.',
+      'Yapamadıklarını değil, yaptıklarını say. Bugün yeterince yaptın.',
+      'Gözlerini kapat. Evren senin uykunda da dönmeye devam edecek.',
+      'Dinlenmek de üretmektir; beden gece kendini onarır.',
+      'Her nefeste biraz daha ağırlaş. Yatak seni taşıyor.',
+      'İyi geceler. Yıldızlar nöbette.',
+    ],
   },
 ];
 

@@ -51,6 +51,8 @@ export const FrequencyConsole: React.FC<FrequencyConsoleProps> = ({ isOpen, onCl
   const [tab, setTab] = useState<'mood' | 'tone'>('mood');
   const [selectedMood, setSelectedMood] = useState<MoodId>(s.moodId);
   const [sleepMinutes, setSleepMinutes] = useState(0);
+  const [wordIdx, setWordIdx] = useState(0);
+  const [showEffects, setShowEffects] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const mood = MOODS.find((m) => m.id === (s.mode === 'mood' ? s.moodId : selectedMood)) ?? MOODS[0];
@@ -59,6 +61,16 @@ export const FrequencyConsole: React.FC<FrequencyConsoleProps> = ({ isOpen, onCl
   useEffect(() => {
     if (s.mode === 'mood') setSelectedMood(s.moodId);
   }, [s.mode, s.moodId]);
+
+  // Söz kartı: müzik çalarken her 10 saniyede bir sonraki söze geçer.
+  useEffect(() => {
+    setWordIdx(0);
+  }, [mood.id]);
+  useEffect(() => {
+    if (!moodPlaying || !isOpen) return;
+    const id = window.setInterval(() => setWordIdx((i) => i + 1), 10000);
+    return () => window.clearInterval(id);
+  }, [moodPlaying, isOpen, mood.id]);
 
   useEffect(() => {
     if (!s.sleepEndsAt) setSleepMinutes(0);
@@ -266,6 +278,51 @@ export const FrequencyConsole: React.FC<FrequencyConsoleProps> = ({ isOpen, onCl
                 {mood.tagline}
               </div>
               <p className="text-sm text-slate-300 font-light leading-relaxed">{mood.description}</p>
+            </div>
+
+            {/* Söz kartı */}
+            <div
+              className="relative mb-4 p-5 rounded-2xl border text-center overflow-hidden"
+              style={{ borderColor: `${mood.accent}55`, background: `linear-gradient(135deg, ${mood.accent}14, transparent 70%)` }}
+            >
+              <p
+                key={`${mood.id}-${wordIdx}`}
+                className="font-cinzel text-base sm:text-lg text-white leading-snug animate-[fadeWord_0.9s_ease]"
+              >
+                “{mood.words[wordIdx % mood.words.length]}”
+              </p>
+              <button
+                onClick={() => setWordIdx((i) => i + 1)}
+                className="mt-3 text-[11px] font-mono cursor-pointer hover:underline"
+                style={{ color: mood.accent }}
+              >
+                sonraki söz →
+              </button>
+            </div>
+
+            {/* Bu ses sana ne yapar? */}
+            <div className="relative mb-4 rounded-2xl border border-slate-800 bg-[#03050a]/60">
+              <button
+                onClick={() => setShowEffects((v) => !v)}
+                className="w-full flex items-center justify-between px-4 py-3 text-left cursor-pointer"
+              >
+                <span className="text-sm text-white font-medium">Bu ses sana ne yapar?</span>
+                <span className="text-xs font-mono" style={{ color: mood.accent }}>
+                  {showEffects ? 'gizle' : mood.effectTitle}
+                </span>
+              </button>
+              {showEffects && (
+                <div className="px-4 pb-4 space-y-3">
+                  {mood.effects.map((e) => (
+                    <div key={e.title}>
+                      <div className="text-xs font-semibold" style={{ color: mood.accent }}>
+                        {e.title}
+                      </div>
+                      <p className="text-xs text-slate-300 font-light leading-relaxed">{e.text}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Katmanlar */}
