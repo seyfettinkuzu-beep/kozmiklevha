@@ -1,6 +1,11 @@
 import { Category, Article, ResonanceTrack, CosmicPeriod } from '../types';
+import img_cosmic_biology_card from '../assets/images/cosmic_biology_card_1788980400020.jpg';
+import img_cosmic_neural_core from '../assets/images/cosmic_neural_core_1788980356073.jpg';
+import img_mystic_alchemy_card from '../assets/images/mystic_alchemy_card_1788980426286.jpg';
+import img_neuro_cosmos_card from '../assets/images/neuro_cosmos_card_1788980374836.jpg';
+import img_resonance_card from '../assets/images/resonance_card_1788980414325.jpg';
 
-export const HERO_IMAGE = '/src/assets/images/cosmic_neural_core_1788980356073.jpg';
+export const HERO_IMAGE = img_cosmic_neural_core;
 
 export const COSMIC_PERIODS: CosmicPeriod[] = [
   {
@@ -74,7 +79,7 @@ export const CATEGORIES: Category[] = [
     color: 'cyan',
     accentColorHex: '#00f0ff',
     iconName: 'BrainCircuit',
-    image: '/src/assets/images/neuro_cosmos_card_1788980374836.jpg',
+    image: img_neuro_cosmos_card,
     stats: '10¹¹ Nöron ~ 10¹¹ Galaksi',
   },
   {
@@ -85,7 +90,7 @@ export const CATEGORIES: Category[] = [
     color: 'green',
     accentColorHex: '#00ff88',
     iconName: 'Dna',
-    image: '/src/assets/images/cosmic_biology_card_1788980400020.jpg',
+    image: img_cosmic_biology_card,
     stats: '200-800 nm Biyofoton Spektrumu',
   },
   {
@@ -96,7 +101,7 @@ export const CATEGORIES: Category[] = [
     color: 'purple',
     accentColorHex: '#b000ff',
     iconName: 'Radio',
-    image: '/src/assets/images/resonance_card_1788980414325.jpg',
+    image: img_resonance_card,
     stats: '7.83 Hz Dünya ~ İnsan Rezonansı',
   },
   {
@@ -107,7 +112,7 @@ export const CATEGORIES: Category[] = [
     color: 'cyan',
     accentColorHex: '#00f0ff',
     iconName: 'Sparkles',
-    image: '/src/assets/images/mystic_alchemy_card_1788980426286.jpg',
+    image: img_mystic_alchemy_card,
     stats: '%99 Kozmik Kökenli Atomlar',
   },
 ];
@@ -125,7 +130,7 @@ export const ARTICLES: Article[] = [
     frequency: '0.0001 Hz',
     author: 'Kozmik Akustik Kürsüsü',
     date: 'Kozmik Şafak Arşivi',
-    image: '/src/assets/images/resonance_card_1788980414325.jpg',
+    image: img_resonance_card,
     tag: 'İlksel Akustik',
     highlights: [
       'Kozmik mikrodalga arka planındaki sıcaklık dalgalanmaları evrenin doğum anındaki akustik rezonansının fosilleşmiş sesidir.',
@@ -150,7 +155,7 @@ export const ARTICLES: Article[] = [
     frequency: '963 Hz',
     author: 'Astrosimya Kolektifi',
     date: 'Elementel Köken',
-    image: '/src/assets/images/mystic_alchemy_card_1788980426286.jpg',
+    image: img_mystic_alchemy_card,
     tag: 'Yıldız Tozu',
     highlights: [
       'Kanımızdaki hemoglobinin merkezindeki demir (Fe) atomu, bir beyaz cücenin veya süpernovanın termonükleer fırınında üretilmiştir.',
@@ -175,7 +180,7 @@ export const ARTICLES: Article[] = [
     frequency: '7.83 Hz',
     author: 'Rezonans Laboratuvarı',
     date: 'Elektromanyetik Denge',
-    image: '/src/assets/images/resonance_card_1788980414325.jpg',
+    image: img_resonance_card,
     tag: 'İyonosfer & Zihin',
     highlights: [
       'Gezegendeki şimşek deşarjları iyonosfer boşluğunda sürekli bir elektromanyetik rezonans akordu oluşturur.',
@@ -200,7 +205,7 @@ export const ARTICLES: Article[] = [
     frequency: '528 Hz',
     author: 'Prof. F.A. Popp Mirası Çözümleme',
     date: 'Biyolüminesans Arşivi',
-    image: '/src/assets/images/cosmic_biology_card_1788980400020.jpg',
+    image: img_cosmic_biology_card,
     tag: 'Biyofotonik',
     highlights: [
       'Hücre bölünmesi ve doku onarımı, kimyasal difüzyondan katbekat hızlı olan biyofoton rezonansıyla koordine edilir.',
@@ -225,7 +230,7 @@ export const ARTICLES: Article[] = [
     frequency: '432 Hz',
     author: 'Kozmik Levha Araştırma Enstitüsü',
     date: 'Evrensel Zaman Döngüsü',
-    image: '/src/assets/images/neuro_cosmos_card_1788980374836.jpg',
+    image: img_neuro_cosmos_card,
     tag: 'Fraktal Evren',
     highlights: [
       'Beyin dokusundaki su oranı ile evrendeki karanlık madde yoğunluğu %70-75 bandında paralellik sergiler.',
@@ -250,7 +255,7 @@ export const ARTICLES: Article[] = [
     frequency: '963 Hz',
     author: 'Noosfer Biliş Araştırmaları',
     date: 'Zihinsel Evrim',
-    image: '/src/assets/images/cosmic_neural_core_1788980356073.jpg',
+    image: img_cosmic_neural_core,
     tag: 'Gezegensel Zihin',
     highlights: [
       'İnsan bilinci yalıtılmış bir ada değil; elektromanyetik ve bilişsel rezonansla gezegensel bir üst-akla bağlıdır.',
