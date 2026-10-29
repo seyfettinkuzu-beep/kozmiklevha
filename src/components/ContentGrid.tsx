@@ -87,7 +87,7 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
   const currentPeriodObj = COSMIC_PERIODS.find((p) => p.id === selectedPeriod);
 
   return (
-    <section id="icerik-alani" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <section id="icerik-alani" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
       {/* Category Nav Filters Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6 border-b border-slate-800/80 pb-8">
         <div>
@@ -95,7 +95,7 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
             <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-ping" />
             <span>Kozmik Bilgi Matrisi</span>
           </div>
-          <h2 className="font-cinzel text-2xl sm:text-4xl font-bold tracking-wide text-white">
+          <h2 className="font-cinzel text-2xl sm:text-3xl font-bold tracking-wide text-white">
             Öne Çıkan Keşifler & Doktrinler
           </h2>
         </div>
