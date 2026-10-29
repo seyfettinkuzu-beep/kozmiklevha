@@ -29,13 +29,13 @@ export const MoodSection: React.FC<MoodSectionProps> = ({ onOpenConsole }) => {
   };
 
   return (
-    <section id="seslerin-tesiri" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+    <section id="seslerin-tesiri" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="max-w-3xl mb-10">
         <div className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-[#00f0ff] uppercase mb-3">
           <Ear className="w-3.5 h-3.5" />
           <span>Sesin İnsana Tesiri</span>
         </div>
-        <h2 className="font-cinzel text-2xl sm:text-4xl font-bold text-white tracking-wide mb-4">
+        <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide mb-4">
           Bir şarkı seni neden ağlatır, neden koşturur?
         </h2>
         <div className="space-y-3 text-sm sm:text-base text-slate-300 font-light leading-relaxed">

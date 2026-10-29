@@ -63,8 +63,8 @@ export default function App() {
         />
 
         {/* Interactive Cosmic Manifesto & Resonance Strip */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="rounded-3xl p-6 sm:p-10 bg-gradient-to-r from-[#070b16]/90 via-[#0a0d20]/80 to-[#0d071d]/90 border border-[#00f0ff]/20 backdrop-blur-2xl shadow-[0_0_40px_rgba(0,240,255,0.08)] relative overflow-hidden">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-[#070b16]/90 via-[#0a0d20]/80 to-[#0d071d]/90 border border-[#00f0ff]/20 backdrop-blur-2xl shadow-[0_0_40px_rgba(0,240,255,0.08)] relative overflow-hidden">
             {/* Glow background accents */}
             <div className="absolute -top-12 -left-12 w-48 h-48 bg-[#00f0ff]/15 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-[#b000ff]/20 rounded-full blur-3xl pointer-events-none" />
