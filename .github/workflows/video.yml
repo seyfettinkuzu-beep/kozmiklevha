@@ -19,8 +19,8 @@ jobs:
           curl -fsSL -A "KozmikLevha/1.0 (https://github.com/seyfettinkuzu-beep/kozmiklevha)" "$url" -o /tmp/src.webm
           ffprobe -v error -show_entries format=duration -of csv=p=0 /tmp/src.webm
           # sessiz, 1600px, H.264 (her tarayıcıda oynar) + VP9 webm (daha küçük)
-          ffmpeg -y -v error -i /tmp/src.webm -an -vf "scale=1600:-2,fps=30" -c:v libx264 -preset slow -crf 27 -pix_fmt yuv420p -movflags +faststart public/video/webb-pillars.mp4
-          ffmpeg -y -v error -i /tmp/src.webm -an -vf "scale=1600:-2,fps=30" -c:v libvpx-vp9 -b:v 0 -crf 38 -row-mt 1 public/video/webb-pillars.webm
+          ffmpeg -y -v error -i /tmp/src.webm -an -filter_complex "[0:v]scale=1600:-2,fps=30,split[a][b];[b]reverse[r];[a][r]concat=n=2:v=1:a=0" -c:v libx264 -preset slow -crf 27 -pix_fmt yuv420p -movflags +faststart public/video/webb-pillars.mp4
+          ffmpeg -y -v error -i /tmp/src.webm -an -filter_complex "[0:v]scale=1600:-2,fps=30,split[a][b];[b]reverse[r];[a][r]concat=n=2:v=1:a=0" -c:v libvpx-vp9 -b:v 0 -crf 38 -row-mt 1 public/video/webb-pillars.webm
           ffmpeg -y -v error -i /tmp/src.webm -vf "scale=1600:-2" -frames:v 1 -q:v 3 public/video/webb-pillars-poster.jpg
           ls -la public/video
       - name: Kaydet
@@ -28,5 +28,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
           git add public/video
-          git diff --cached --quiet || git commit -m "Manşet videosu eklendi (NASA SVS, kamu malı)"
+          git diff --cached --quiet || git commit -m "Manşet videosu: ESO Yaratılış Sütunları 3B (CC BY 4.0), ileri-geri döngü"
           git push
