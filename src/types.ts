@@ -41,6 +41,8 @@ export interface Article {
   image: string;
   highlights: string[];
   tag: string;
+  /** bilim: yerleşik bilgi · yorum: bilimsel bulgu + yorum · dusunce: spekülatif/felsefi */
+  nature?: 'bilim' | 'yorum' | 'dusunce';
 }
 
 export interface ResonanceTrack {
