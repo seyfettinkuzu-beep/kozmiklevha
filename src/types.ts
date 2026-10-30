@@ -41,6 +41,8 @@ export interface Article {
   image: string;
   /** Görsel künyesi (kaynak ve lisans) */
   credit?: string;
+  /** Manşette görsel yerine oynayan sessiz döngü video (public/ altındaki yollar) */
+  video?: { mp4: string; webm?: string; poster: string; credit: string };
   highlights: string[];
   tag: string;
   /** bilim: yerleşik bilgi · yorum: bilimsel bulgu + yorum · dusunce: spekülatif/felsefi */

@@ -164,6 +164,12 @@ export const ARTICLES: Article[] = [
     date: '30 Ekim 2026',
     image: ph_webb,
     credit: 'Yaratılış Sütunları · NASA, ESA, CSA, STScI (James Webb)',
+    video: {
+      mp4: 'video/webb-pillars.mp4',
+      webm: 'video/webb-pillars.webm',
+      poster: 'video/webb-pillars-poster.jpg',
+      credit: "Yaratılış Sütunları'nın 3B görselleştirmesi · ESO/M. Kornmesser, CC BY 4.0",
+    },
     tag: 'Yıldız Tozu',
     nature: 'bilim',
     highlights: [

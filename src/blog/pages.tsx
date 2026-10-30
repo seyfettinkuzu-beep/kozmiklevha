@@ -19,22 +19,34 @@ const Wrap: React.FC<{ children: React.ReactNode; className?: string }> = ({ chi
   <div className={`max-w-[1240px] mx-auto px-4 sm:px-10 ${className}`}>{children}</div>
 );
 
-/** Tam genişlik manşet görseli + künye */
-const HeroImage: React.FC<{ a: Article; eager?: boolean }> = ({ a, eager }) => (
-  <figure>
-    <img
-      src={a.image}
-      alt=""
-      loading={eager ? 'eager' : 'lazy'}
-      className="w-full h-[300px] sm:h-[460px] lg:h-[560px] object-cover object-center block"
-    />
-    {a.credit && (
-      <figcaption className="max-w-[1320px] mx-auto px-4 sm:px-10 pt-2 text-right text-[11px] text-muted">
-        {a.credit}
-      </figcaption>
-    )}
-  </figure>
-);
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+/** Tam genişlik manşet: varsa sessiz döngü video, yoksa görsel; altında künye */
+const HeroImage: React.FC<{ a: Article; eager?: boolean }> = ({ a, eager }) => {
+  const cls = 'w-full h-[300px] sm:h-[460px] lg:h-[560px] object-cover object-center block';
+  const v = a.video;
+  const still = !v || prefersReducedMotion();
+  return (
+    <figure className="bg-night">
+      {v && !still ? (
+        <video className={cls} autoPlay muted loop playsInline preload="auto" poster={v.poster} aria-hidden>
+          {v.webm && <source src={v.webm} type="video/webm" />}
+          <source src={v.mp4} type="video/mp4" />
+        </video>
+      ) : (
+        <img src={v ? v.poster : a.image} alt="" loading={eager ? 'eager' : 'lazy'} className={cls} />
+      )}
+      {(v?.credit || a.credit) && (
+        <figcaption className="bg-white">
+          <div className="max-w-[1320px] mx-auto px-4 sm:px-10 pt-2 text-right text-[11px] text-muted">
+            {v ? v.credit : a.credit}
+          </div>
+        </figcaption>
+      )}
+    </figure>
+  );
+};
 
 /** Merak Kabinesi: tarihi bir görsel, müze etiketi gibi künyesiyle */
 const Cabinet: React.FC = () => (
