@@ -54,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       id="main-navbar"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#0d0f14]/85 backdrop-blur-md border-b border-[#cdb88a]/20 shadow-[0_4px_30px_rgba(0,0,0,0.8),0_0_20px_rgba(205, 184, 138,0.08)]'
+          ? 'bg-[#0d0f14]/95 backdrop-blur-md border-b border-[#cdb88a]/20'
           : 'bg-transparent border-b border-white/5'
       }`}
     >
@@ -76,7 +76,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-cinzel text-xl sm:text-2xl font-bold tracking-[0.12em] text-white group-hover:text-[#cdb88a] transition-colors duration-300 drop-">
+              <span className="font-cinzel whitespace-nowrap text-xl sm:text-2xl font-bold tracking-[0.12em] text-white group-hover:text-[#cdb88a] transition-colors duration-300 drop-">
                 KOZMİK LEVHA
               </span>
             </div>

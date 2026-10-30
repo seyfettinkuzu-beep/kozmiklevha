@@ -81,8 +81,8 @@ export const CosmicBackground: React.FC = () => {
         height * 0.2,
         width * 0.5
       );
-      grad1.addColorStop(0, 'rgba(142, 156, 196, 0.045)');
-      grad1.addColorStop(0.6, 'rgba(205, 184, 138, 0.025)');
+      grad1.addColorStop(0, 'rgba(142,156,196, 0.045)');
+      grad1.addColorStop(0.6, 'rgba(205,184,138, 0.025)');
       grad1.addColorStop(1, 'transparent');
       ctx.fillStyle = grad1;
       ctx.fillRect(0, 0, width, height);
@@ -95,8 +95,8 @@ export const CosmicBackground: React.FC = () => {
         height * 0.7,
         width * 0.45
       );
-      grad2.addColorStop(0, 'rgba(159, 184, 163, 0.03)');
-      grad2.addColorStop(0.5, 'rgba(205, 184, 138, 0.02)');
+      grad2.addColorStop(0, 'rgba(159,184,163, 0.03)');
+      grad2.addColorStop(0.5, 'rgba(205,184,138, 0.02)');
       grad2.addColorStop(1, 'transparent');
       ctx.fillStyle = grad2;
       ctx.fillRect(0, 0, width, height);
@@ -112,7 +112,7 @@ export const CosmicBackground: React.FC = () => {
           if (dist < maxConnectDist) {
             const lineAlpha = (1 - dist / maxConnectDist) * 0.06;
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(205, 184, 138, ${lineAlpha})`;
+            ctx.strokeStyle = `rgba(205,184,138, ${lineAlpha})`;
             ctx.lineWidth = 0.6;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
