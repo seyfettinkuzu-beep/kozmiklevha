@@ -1,0 +1,5 @@
+eso-pillars-a|https://upload.wikimedia.org/wikipedia/commons/transcoded/5/53/3D_data_visualisation_of_the_Pillars_of_Creation_%28eso1518a%29.webm/3D_data_visualisation_of_the_Pillars_of_Creation_%28eso1518a%29.webm.1080p.vp9.webm
+eso-pillars-b|https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d1/3D_data_visualisation_of_the_Pillars_of_Creation.webm/3D_data_visualisation_of_the_Pillars_of_Creation.webm.1080p.vp9.webm
+flying-galaxies|https://upload.wikimedia.org/wikipedia/commons/transcoded/e/e4/Flying_Through_Galaxies_%28SVS14950%29.webm/Flying_Through_Galaxies_%28SVS14950%29.webm.1080p.vp9.webm
+ngc4889|https://upload.wikimedia.org/wikipedia/commons/transcoded/d/d4/Zooming_onto_the_galaxy_NGC_4889.webm/Zooming_onto_the_galaxy_NGC_4889.webm.1080p.vp9.webm
+spiral|https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0d/One-sided_spiral_%28potm2607a%29.webm/One-sided_spiral_%28potm2607a%29.webm.1080p.vp9.webm
