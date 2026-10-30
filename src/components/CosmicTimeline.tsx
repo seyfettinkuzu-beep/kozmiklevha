@@ -99,33 +99,33 @@ export const CosmicTimeline: React.FC<CosmicTimelineProps> = ({
     const size = "w-5 h-5";
     switch (id) {
       case 'all':
-        return <Orbit className={`${size} ${isSelected ? 'text-[#00f0ff] animate-spin-slow' : 'text-slate-400'}`} />;
+        return <Orbit className={`${size} ${isSelected ? 'text-[#cdb88a]' : 'text-slate-400'}`} />;
       case 'primordial':
-        return <Flame className={`${size} ${isSelected ? 'text-amber-400 animate-pulse' : 'text-slate-400'}`} />;
+        return <Flame className={`${size} ${isSelected ? 'text-amber-400' : 'text-slate-400'}`} />;
       case 'stelliferous':
-        return <Sparkles className={`${size} ${isSelected ? 'text-[#00f0ff] animate-pulse' : 'text-slate-400'}`} />;
+        return <Sparkles className={`${size} ${isSelected ? 'text-[#cdb88a]' : 'text-slate-400'}`} />;
       case 'planetary':
-        return <Radio className={`${size} ${isSelected ? 'text-[#b000ff] animate-pulse' : 'text-slate-400'}`} />;
+        return <Radio className={`${size} ${isSelected ? 'text-[#8e9cc4]' : 'text-slate-400'}`} />;
       case 'biophotonic':
-        return <Dna className={`${size} ${isSelected ? 'text-[#00ff88] animate-pulse' : 'text-slate-400'}`} />;
+        return <Dna className={`${size} ${isSelected ? 'text-[#9fb8a3]' : 'text-slate-400'}`} />;
       case 'neural':
-        return <BrainCircuit className={`${size} ${isSelected ? 'text-[#00f0ff] animate-pulse' : 'text-slate-400'}`} />;
+        return <BrainCircuit className={`${size} ${isSelected ? 'text-[#cdb88a]' : 'text-slate-400'}`} />;
     }
   };
 
   const currentPeriodObj = periods.find((p) => p.id === selectedPeriod) || periods[0];
 
   return (
-    <div className="relative mb-14 rounded-3xl bg-[#050813]/80 border border-[#00f0ff]/20 p-5 sm:p-7 backdrop-blur-2xl shadow-[0_0_35px_rgba(0,240,255,0.06)] overflow-hidden">
+    <div className="relative mb-14 rounded-3xl bg-[#050813]/80 border border-[#cdb88a]/20 p-5 sm:p-7 backdrop-blur-2xl overflow-hidden">
       {/* Background ambient lighting */}
-      <div className="absolute -top-24 left-1/3 w-96 h-96 bg-[#00f0ff]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-24 right-1/4 w-96 h-96 bg-[#b000ff]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -top-24 left-1/3 w-96 h-96 bg-[#cdb88a]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-24 right-1/4 w-96 h-96 bg-[#8e9cc4]/10 rounded-full blur-3xl pointer-events-none" />
 
       {/* Top Header of the Timeline */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 relative z-10">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono tracking-widest text-[#00f0ff] uppercase mb-1">
-            <Clock className="w-3.5 h-3.5 text-[#00f0ff] animate-pulse" />
+          <div className="flex items-center gap-2 text-xs font-mono tracking-wider text-[#cdb88a] uppercase mb-1">
+            <Clock className="w-3.5 h-3.5 text-[#cdb88a]" />
             <span>Kozmik Evrim Çizelgesi</span>
             <span className="text-slate-600">|</span>
             <span className="text-slate-400">13.8 Milyar Yıllık Süreç</span>
@@ -140,7 +140,7 @@ export const CosmicTimeline: React.FC<CosmicTimelineProps> = ({
           {selectedPeriod !== 'all' && (
             <button
               onClick={() => onSelectPeriod('all')}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-[#00f0ff] bg-white/5 hover:bg-[#00f0ff]/10 border border-white/10 hover:border-[#00f0ff]/40 transition-all cursor-pointer mr-2"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-[#cdb88a] bg-white/5 hover:bg-[#cdb88a]/10 border border-white/10 hover:border-[#cdb88a]/40 transition-all cursor-pointer mr-2"
               title="Tüm dönemleri göster"
             >
               <RotateCcw className="w-3 h-3" />
@@ -154,7 +154,7 @@ export const CosmicTimeline: React.FC<CosmicTimelineProps> = ({
             aria-label="Zaman çizelgesini sola kaydır"
             className={`p-2 rounded-full border transition-all cursor-pointer ${
               canScrollLeft
-                ? 'bg-[#090e1c] border-[#00f0ff]/40 text-[#00f0ff] hover:bg-[#00f0ff]/20 hover:shadow-[0_0_15px_rgba(0,240,255,0.4)]'
+                ? 'bg-[#090e1c] border-[#cdb88a]/40 text-[#cdb88a] hover:bg-[#cdb88a]/20'
                 : 'bg-black/30 border-slate-800 text-slate-600 cursor-not-allowed opacity-50'
             }`}
           >
@@ -166,7 +166,7 @@ export const CosmicTimeline: React.FC<CosmicTimelineProps> = ({
             aria-label="Zaman çizelgesini sağa kaydır"
             className={`p-2 rounded-full border transition-all cursor-pointer ${
               canScrollRight
-                ? 'bg-[#090e1c] border-[#00f0ff]/40 text-[#00f0ff] hover:bg-[#00f0ff]/20 hover:shadow-[0_0_15px_rgba(0,240,255,0.4)]'
+                ? 'bg-[#090e1c] border-[#cdb88a]/40 text-[#cdb88a] hover:bg-[#cdb88a]/20'
                 : 'bg-black/30 border-slate-800 text-slate-600 cursor-not-allowed opacity-50'
             }`}
           >
@@ -214,36 +214,36 @@ export const CosmicTimeline: React.FC<CosmicTimelineProps> = ({
               switch (period.color) {
                 case 'amber':
                   return {
-                    cardBorder: 'border-amber-500/60 shadow-[0_0_30px_rgba(245,158,11,0.25)]',
+                    cardBorder: 'border-amber-500/60',
                     cardBg: 'bg-gradient-to-b from-[#1c1208]/90 to-[#0c0905]/95',
-                    nodeRing: 'border-amber-400 bg-amber-500/20 text-amber-300 shadow-[0_0_20px_rgba(245,158,11,0.8)] scale-110',
-                    badge: 'text-amber-300 bg-amber-500/20 border-amber-400/50 shadow-[0_0_10px_rgba(245,158,11,0.4)]',
+                    nodeRing: 'border-amber-400 bg-amber-500/20 text-amber-300 scale-110',
+                    badge: 'text-amber-300 bg-amber-500/20 border-amber-400/50',
                     accentText: 'text-amber-200',
                   };
                 case 'purple':
                   return {
-                    cardBorder: 'border-[#b000ff]/60 shadow-[0_0_30px_rgba(176,0,255,0.25)]',
+                    cardBorder: 'border-[#8e9cc4]/60',
                     cardBg: 'bg-gradient-to-b from-[#160824]/90 to-[#0b0514]/95',
-                    nodeRing: 'border-[#b000ff] bg-[#b000ff]/20 text-purple-200 shadow-[0_0_20px_rgba(176,0,255,0.8)] scale-110',
-                    badge: 'text-purple-300 bg-[#b000ff]/20 border-[#b000ff]/50 shadow-[0_0_10px_rgba(176,0,255,0.4)]',
-                    accentText: 'text-purple-200',
+                    nodeRing: 'border-[#8e9cc4] bg-[#8e9cc4]/20 text-slate-200 scale-110',
+                    badge: 'text-slate-300 bg-[#8e9cc4]/20 border-[#8e9cc4]/50',
+                    accentText: 'text-slate-200',
                   };
                 case 'green':
                   return {
-                    cardBorder: 'border-[#00ff88]/60 shadow-[0_0_30px_rgba(0,255,136,0.25)]',
+                    cardBorder: 'border-[#9fb8a3]/60',
                     cardBg: 'bg-gradient-to-b from-[#081a13]/90 to-[#040f0a]/95',
-                    nodeRing: 'border-[#00ff88] bg-[#00ff88]/20 text-[#00ff88] shadow-[0_0_20px_rgba(0,255,136,0.8)] scale-110',
-                    badge: 'text-[#00ff88] bg-[#00ff88]/20 border-[#00ff88]/50 shadow-[0_0_10px_rgba(0,255,136,0.4)]',
-                    accentText: 'text-[#00ff88]',
+                    nodeRing: 'border-[#9fb8a3] bg-[#9fb8a3]/20 text-[#9fb8a3] scale-110',
+                    badge: 'text-[#9fb8a3] bg-[#9fb8a3]/20 border-[#9fb8a3]/50',
+                    accentText: 'text-[#9fb8a3]',
                   };
                 case 'cyan':
                 default:
                   return {
-                    cardBorder: 'border-[#00f0ff]/60 shadow-[0_0_30px_rgba(0,240,255,0.25)]',
+                    cardBorder: 'border-[#cdb88a]/60',
                     cardBg: 'bg-gradient-to-b from-[#081524]/90 to-[#040c14]/95',
-                    nodeRing: 'border-[#00f0ff] bg-[#00f0ff]/20 text-[#00f0ff] shadow-[0_0_20px_rgba(0,240,255,0.8)] scale-110',
-                    badge: 'text-[#00f0ff] bg-[#00f0ff]/20 border-[#00f0ff]/50 shadow-[0_0_10px_rgba(0,240,255,0.4)]',
-                    accentText: 'text-[#00f0ff]',
+                    nodeRing: 'border-[#cdb88a] bg-[#cdb88a]/20 text-[#cdb88a] scale-110',
+                    badge: 'text-[#cdb88a] bg-[#cdb88a]/20 border-[#cdb88a]/50',
+                    accentText: 'text-[#cdb88a]',
                   };
               }
             };
@@ -259,7 +259,7 @@ export const CosmicTimeline: React.FC<CosmicTimelineProps> = ({
               >
                 {/* Active Sleek Glowing Indicator Laser Line */}
                 {isSelected && (
-                  <div className="absolute -top-[1px] left-6 right-6 h-[2px] bg-gradient-to-r from-transparent via-[#00f0ff] to-transparent shadow-[0_0_12px_#00f0ff]" />
+                  <div className="absolute -top-[1px] left-6 right-6 h-[2px] bg-gradient-to-r from-transparent via-[#cdb88a] to-transparent" />
                 )}
 
                 {/* Top Timeline Node & Year Tag */}
@@ -270,7 +270,7 @@ export const CosmicTimeline: React.FC<CosmicTimelineProps> = ({
                   >
                     {getPeriodIcon(period.id, isSelected)}
                     {isSelected && (
-                      <span className="absolute inset-0 rounded-full animate-ping opacity-40 bg-current pointer-events-none" />
+                      <span className="absolute inset-0 rounded-full opacity-40 bg-current pointer-events-none" />
                     )}
                   </div>
 
@@ -296,7 +296,7 @@ export const CosmicTimeline: React.FC<CosmicTimelineProps> = ({
                   </div>
                   <h4
                     className={`font-cinzel text-base font-bold transition-colors ${
-                      isSelected ? styles.accentText : 'text-white group-hover:text-[#00f0ff]'
+                      isSelected ? styles.accentText : 'text-white group-hover:text-[#cdb88a]'
                     }`}
                   >
                     {period.name}
@@ -312,7 +312,7 @@ export const CosmicTimeline: React.FC<CosmicTimelineProps> = ({
                     {isSelected ? '● Seçili Dönem' : '○ Döneme Git'}
                   </span>
                   {isSelected && (
-                    <span className="w-2 h-2 rounded-full bg-current animate-pulse" />
+                    <span className="w-2 h-2 rounded-full bg-current" />
                   )}
                 </div>
               </div>
@@ -324,7 +324,7 @@ export const CosmicTimeline: React.FC<CosmicTimelineProps> = ({
       {/* Bottom Sleek Indicator & Readout Strip */}
       <div className="mt-4 pt-4 border-t border-slate-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
         <div className="flex items-center gap-2.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#00f0ff] animate-ping" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#cdb88a]" />
           <span className="text-slate-400 font-mono">Aktif Kozmik Katman:</span>
           <span className="text-white font-semibold font-cinzel tracking-wide">
             {currentPeriodObj.name}
@@ -335,7 +335,7 @@ export const CosmicTimeline: React.FC<CosmicTimelineProps> = ({
           </span>
         </div>
 
-        <div className="flex items-center gap-2 font-mono text-[11px] text-[#00f0ff] bg-[#00f0ff]/10 px-3 py-1 rounded-full border border-[#00f0ff]/30">
+        <div className="flex items-center gap-2 font-mono text-[11px] text-[#cdb88a] bg-[#cdb88a]/10 px-3 py-1 rounded-full border border-[#cdb88a]/30">
           <span>{currentPeriodObj.temporalRange}</span>
         </div>
       </div>

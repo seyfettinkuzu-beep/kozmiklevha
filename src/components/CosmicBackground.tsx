@@ -35,31 +35,24 @@ export const CosmicBackground: React.FC = () => {
     window.addEventListener('resize', handleResize);
 
     // Color palette: bioluminescent cyan, vivid purple, electric green, soft star white
-    const colors = [
-      '#00f0ff', // bioluminescent neon cyan
-      '#b000ff', // vivid purple
-      '#00ff88', // electric green
-      '#7000ff', // deep violet
-      '#4deeea', // turquoise
-      '#ffffff', // stellar dust
-    ];
+    const colors = ['#f1ece0', '#cdb88a', '#b5c4cc', '#ffffff'];
 
     let particles: Particle[] = [];
 
     const initParticles = () => {
       particles = [];
-      const particleCount = Math.min(Math.floor((width * height) / 11000), 120);
+      const particleCount = Math.min(Math.floor((width * height) / 20000), 60);
 
       for (let i = 0; i < particleCount; i++) {
         particles.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.35,
-          vy: (Math.random() - 0.5) * 0.35,
-          radius: Math.random() * 1.8 + 0.6,
+          vx: (Math.random() - 0.5) * 0.12,
+          vy: (Math.random() - 0.5) * 0.12,
+          radius: Math.random() * 1.2 + 0.4,
           color: colors[Math.floor(Math.random() * colors.length)],
-          alpha: Math.random() * 0.7 + 0.2,
-          pulseSpeed: Math.random() * 0.03 + 0.01,
+          alpha: Math.random() * 0.45 + 0.15,
+          pulseSpeed: Math.random() * 0.008 + 0.003,
           pulseAngle: Math.random() * Math.PI * 2,
         });
       }
@@ -88,8 +81,8 @@ export const CosmicBackground: React.FC = () => {
         height * 0.2,
         width * 0.5
       );
-      grad1.addColorStop(0, 'rgba(176, 0, 255, 0.045)');
-      grad1.addColorStop(0.6, 'rgba(0, 240, 255, 0.025)');
+      grad1.addColorStop(0, 'rgba(142, 156, 196, 0.045)');
+      grad1.addColorStop(0.6, 'rgba(205, 184, 138, 0.025)');
       grad1.addColorStop(1, 'transparent');
       ctx.fillStyle = grad1;
       ctx.fillRect(0, 0, width, height);
@@ -102,8 +95,8 @@ export const CosmicBackground: React.FC = () => {
         height * 0.7,
         width * 0.45
       );
-      grad2.addColorStop(0, 'rgba(0, 255, 136, 0.03)');
-      grad2.addColorStop(0.5, 'rgba(0, 240, 255, 0.02)');
+      grad2.addColorStop(0, 'rgba(159, 184, 163, 0.03)');
+      grad2.addColorStop(0.5, 'rgba(205, 184, 138, 0.02)');
       grad2.addColorStop(1, 'transparent');
       ctx.fillStyle = grad2;
       ctx.fillRect(0, 0, width, height);
@@ -117,9 +110,9 @@ export const CosmicBackground: React.FC = () => {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < maxConnectDist) {
-            const lineAlpha = (1 - dist / maxConnectDist) * 0.18;
+            const lineAlpha = (1 - dist / maxConnectDist) * 0.06;
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(0, 240, 255, ${lineAlpha})`;
+            ctx.strokeStyle = `rgba(205, 184, 138, ${lineAlpha})`;
             ctx.lineWidth = 0.6;
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -137,7 +130,7 @@ export const CosmicBackground: React.FC = () => {
         const dx = p.x - mouseX;
         const dy = p.y - mouseY;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 140) {
+        if (false) {
           const force = (1 - dist / 140) * 0.6;
           p.x += (dx / dist) * force;
           p.y += (dy / dist) * force;
@@ -157,7 +150,7 @@ export const CosmicBackground: React.FC = () => {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius * 2.8, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
-        ctx.globalAlpha = currentAlpha * 0.25;
+        ctx.globalAlpha = currentAlpha * 0.1;
         ctx.fill();
 
         // Draw particle nucleus
@@ -184,8 +177,8 @@ export const CosmicBackground: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0 opacity-80"
-      style={{ background: '#030508' }}
+      className="fixed inset-0 pointer-events-none z-0 opacity-70"
+      style={{ background: '#0d0f14' }}
     />
   );
 };

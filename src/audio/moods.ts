@@ -46,7 +46,7 @@ export const MOODS: Mood[] = [
     name: 'Sakin',
     tagline: 'Dalga sesi · 60 vuruş · yumuşak akorlar',
     description: 'Kalp atışına yakın yavaş bir nabız, majör-7 akorlar ve uzaktan gelen çan sesleri. Gevşemek, nefes almak için.',
-    accent: '#00f0ff',
+    accent: '#8fb3c4',
     bpm: 60,
     barsPerChord: 2,
     chords: [
@@ -87,7 +87,7 @@ export const MOODS: Mood[] = [
     name: 'Odak',
     tagline: 'Yağmur · 72 vuruş · düzenli arpej',
     description: 'Tekrar eden, şaşırtmayan bir arpej ve arkada yağmur. Dikkat dağıtmadan zihni meşgul tutan bir ses perdesi; çalışırken arka planda.',
-    accent: '#00ff88',
+    accent: '#9fb8a3',
     bpm: 72,
     barsPerChord: 2,
     chords: [
@@ -128,7 +128,7 @@ export const MOODS: Mood[] = [
     name: 'Motivasyon',
     tagline: 'Davul · 112 vuruş · yükselen majör',
     description: 'Her vuruşta kick davul, sekizlik bas ve I–V–vi–IV dizisi. Spor, yürüyüş ya da güne enerjik başlamak için.',
-    accent: '#f59e0b',
+    accent: '#d4a35f',
     bpm: 112,
     barsPerChord: 2,
     chords: [
@@ -170,7 +170,7 @@ export const MOODS: Mood[] = [
     name: 'Hüzün',
     tagline: 'Yağmur · 64 vuruş · minör piyano',
     description: 'Minör akorlar ve seyrek piyano notaları. İçe dönmek, duygularla baş başa kalmak isteyenler için.',
-    accent: '#b000ff',
+    accent: '#a097c9',
     bpm: 64,
     barsPerChord: 2,
     chords: [
@@ -211,7 +211,7 @@ export const MOODS: Mood[] = [
     name: 'Uyku',
     tagline: 'Okyanus · çok yavaş · koyu tonlar',
     description: 'Ritimsiz, her 20 saniyede bir değişen derin akorlar ve uzaktan dalga sesi. Zamanlayıcıyla birlikte kullanın.',
-    accent: '#6366f1',
+    accent: '#7f8bb8',
     bpm: 48,
     barsPerChord: 4,
     chords: [

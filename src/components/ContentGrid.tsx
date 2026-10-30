@@ -52,35 +52,35 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
   const getCategoryIcon = (id: CategoryId) => {
     switch (id) {
       case 'neuro':
-        return <BrainCircuit className="w-5 h-5 text-[#00f0ff]" />;
+        return <BrainCircuit className="w-5 h-5 text-[#cdb88a]" />;
       case 'biology':
-        return <Dna className="w-5 h-5 text-[#00ff88]" />;
+        return <Dna className="w-5 h-5 text-[#9fb8a3]" />;
       case 'resonance':
-        return <Radio className="w-5 h-5 text-[#b000ff]" />;
+        return <Radio className="w-5 h-5 text-[#8e9cc4]" />;
       case 'alchemy':
-        return <Sparkles className="w-5 h-5 text-[#00f0ff]" />;
+        return <Sparkles className="w-5 h-5 text-[#cdb88a]" />;
     }
   };
 
   const getCardBorderClass = (color: 'cyan' | 'purple' | 'green') => {
     switch (color) {
       case 'cyan':
-        return 'border-[#00f0ff]/20 hover:border-[#00f0ff]/60 hover:shadow-[0_0_25px_rgba(0,240,255,0.2)]';
+        return 'border-[#cdb88a]/20 hover:border-[#cdb88a]/60';
       case 'purple':
-        return 'border-[#b000ff]/20 hover:border-[#b000ff]/60 hover:shadow-[0_0_25px_rgba(176,0,255,0.2)]';
+        return 'border-[#8e9cc4]/20 hover:border-[#8e9cc4]/60';
       case 'green':
-        return 'border-[#00ff88]/20 hover:border-[#00ff88]/60 hover:shadow-[0_0_25px_rgba(0,255,136,0.2)]';
+        return 'border-[#9fb8a3]/20 hover:border-[#9fb8a3]/60';
     }
   };
 
   const getTagColorClass = (color: 'cyan' | 'purple' | 'green') => {
     switch (color) {
       case 'cyan':
-        return 'bg-[#00f0ff]/10 text-[#00f0ff] border-[#00f0ff]/30';
+        return 'bg-[#cdb88a]/10 text-[#cdb88a] border-[#cdb88a]/30';
       case 'purple':
-        return 'bg-[#b000ff]/10 text-purple-300 border-[#b000ff]/30';
+        return 'bg-[#8e9cc4]/10 text-slate-300 border-[#8e9cc4]/30';
       case 'green':
-        return 'bg-[#00ff88]/10 text-[#00ff88] border-[#00ff88]/30';
+        return 'bg-[#9fb8a3]/10 text-[#9fb8a3] border-[#9fb8a3]/30';
     }
   };
 
@@ -91,8 +91,8 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
       {/* Category Nav Filters Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6 border-b border-slate-800/80 pb-8">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono tracking-widest text-[#00f0ff] uppercase mb-2">
-            <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-ping" />
+          <div className="flex items-center gap-2 text-xs font-mono tracking-wider text-[#cdb88a] uppercase mb-2">
+            <span className="w-2 h-2 rounded-full bg-[#cdb88a]" />
             <span>Kozmik Bilgi Matrisi</span>
           </div>
           <h2 className="font-cinzel text-2xl sm:text-3xl font-bold tracking-wide text-white">
@@ -107,8 +107,8 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
             onClick={() => onSelectCategory('all')}
             className={`px-4 py-2 rounded-full text-xs font-medium tracking-wider transition-all duration-300 cursor-pointer ${
               selectedCategory === 'all'
-                ? 'bg-[#00f0ff] text-black font-semibold shadow-[0_0_15px_rgba(0,240,255,0.5)]'
-                : 'bg-[#080d19]/80 text-slate-300 border border-slate-800 hover:border-[#00f0ff]/40 hover:text-[#00f0ff]'
+                ? 'bg-[#cdb88a] text-black font-semibold'
+                : 'bg-[#080d19]/80 text-slate-300 border border-slate-800 hover:border-[#cdb88a]/40 hover:text-[#cdb88a]'
             }`}
           >
             Tüm Külliyat
@@ -121,8 +121,8 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
               onClick={() => onSelectCategory(cat.id)}
               className={`px-4 py-2 rounded-full text-xs font-medium tracking-wider transition-all duration-300 cursor-pointer flex items-center gap-1.5 ${
                 selectedCategory === cat.id
-                  ? 'bg-[#b000ff] text-white font-semibold shadow-[0_0_20px_rgba(176,0,255,0.6)]'
-                  : 'bg-[#080d19]/80 text-slate-300 border border-slate-800 hover:border-[#b000ff]/40 hover:text-white'
+                  ? 'bg-[#8e9cc4] text-white font-semibold'
+                  : 'bg-[#080d19]/80 text-slate-300 border border-slate-800 hover:border-[#8e9cc4]/40 hover:text-white'
               }`}
             >
               {getCategoryIcon(cat.id)}
@@ -153,7 +153,7 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
               )}`}
             >
               {/* Background faint glow */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#00f0ff]/10 to-transparent rounded-full blur-2xl pointer-events-none group-hover:scale-150 transition-transform duration-700" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#cdb88a]/10 to-transparent rounded-full blur-2xl pointer-events-none group-hover:scale-150 transition-transform duration-700" />
 
               <div>
                 <div className="flex items-center justify-between mb-4">
@@ -165,10 +165,10 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
                   </span>
                 </div>
 
-                <h3 className="font-cinzel text-lg font-bold text-white group-hover:text-[#00f0ff] transition-colors mb-1.5">
+                <h3 className="font-cinzel text-lg font-bold text-white group-hover:text-[#cdb88a] transition-colors mb-1.5">
                   {cat.name}
                 </h3>
-                <p className="text-xs text-[#00f0ff]/80 font-mono mb-3">
+                <p className="text-xs text-[#cdb88a]/80 font-mono mb-3">
                   {cat.subtitle}
                 </p>
                 <p className="text-xs text-slate-400 line-clamp-3 leading-relaxed font-light">
@@ -176,7 +176,7 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
                 </p>
               </div>
 
-              <div className="pt-4 mt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-300 group-hover:text-[#00f0ff] transition-colors">
+              <div className="pt-4 mt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-300 group-hover:text-[#cdb88a] transition-colors">
                 <span>Konuları İncele</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </div>
@@ -187,11 +187,11 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
 
       {/* Active Filter Indicators Header */}
       {(selectedPeriod !== 'all' || selectedCategory !== 'all' || searchQuery.trim() !== '') && (
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-8 p-4 rounded-2xl bg-[#070b16]/70 border border-[#00f0ff]/20">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-8 p-4 rounded-2xl bg-[#070b16]/70 border border-[#cdb88a]/20">
           <div className="flex flex-wrap items-center gap-2 text-xs">
             <span className="text-slate-400 font-mono">Filtrelenen Sonuçlar:</span>
             {selectedPeriod !== 'all' && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#00f0ff]/15 border border-[#00f0ff]/40 text-[#00f0ff] font-mono">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#cdb88a]/15 border border-[#cdb88a]/40 text-[#cdb88a] font-mono">
                 <span>Dönem: {currentPeriodObj?.name}</span>
                 <button
                   onClick={() => setSelectedPeriod('all')}
@@ -203,7 +203,7 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
               </span>
             )}
             {selectedCategory !== 'all' && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#b000ff]/15 border border-[#b000ff]/40 text-purple-200 font-mono">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#8e9cc4]/15 border border-[#8e9cc4]/40 text-slate-200 font-mono">
                 <span>Kategori: {categories.find((c) => c.id === selectedCategory)?.name}</span>
                 <button
                   onClick={() => onSelectCategory('all')}
@@ -257,7 +257,7 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
                   src={article.image}
                   alt={article.title}
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 filter brightness-95 contrast-105"
+                  className="saturate-[0.6] w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 filter brightness-95 contrast-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#060913] via-transparent to-black/30 pointer-events-none" />
 
@@ -271,18 +271,18 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
                     {article.tag}
                   </span>
 
-                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#030508]/80 border border-slate-700/70 text-[11px] font-mono text-purple-300 backdrop-blur-md">
-                    <Activity className="w-3 h-3 text-[#b000ff]" />
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#0d0f14]/80 border border-slate-700/70 text-[11px] font-mono text-slate-300 backdrop-blur-md">
+                    <Activity className="w-3 h-3 text-[#8e9cc4]" />
                     <span>{article.frequency}</span>
                   </div>
                 </div>
 
                 {/* Category Pill and Temporal Era on bottom of image */}
                 <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
-                  <span className="text-xs tracking-wider uppercase font-cinzel text-white/90 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                  <span className="text-xs tracking-wider uppercase font-cinzel text-white/90">
                     {article.categoryName}
                   </span>
-                  <span className="text-[10px] font-mono text-[#00f0ff] bg-black/70 px-2 py-0.5 rounded border border-[#00f0ff]/30 backdrop-blur-md">
+                  <span className="text-[10px] font-mono text-[#cdb88a] bg-black/70 px-2 py-0.5 rounded border border-[#cdb88a]/30 backdrop-blur-md">
                     {article.periodEra}
                   </span>
                 </div>
@@ -291,7 +291,7 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
               {/* Card Body */}
               <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-white group-hover:text-[#00f0ff] transition-colors duration-300 mb-3 leading-snug">
+                  <h3 className="font-cinzel text-xl sm:text-2xl font-bold text-white group-hover:text-[#cdb88a] transition-colors duration-300 mb-3 leading-snug">
                     {article.title}
                   </h3>
 
@@ -303,7 +303,7 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
                   <div className="space-y-2 mb-6">
                     {article.highlights.slice(0, 2).map((highlight, idx) => (
                       <div key={idx} className="flex items-start gap-2 text-xs text-slate-400">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#00ff88] mt-1.5 shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#9fb8a3] mt-1.5 shrink-0" />
                         <span className="line-clamp-2">{highlight}</span>
                       </div>
                     ))}
@@ -321,7 +321,7 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
 
                   <button
                     onClick={() => onOpenArticle(article)}
-                    className="flex items-center gap-2 text-xs font-medium tracking-wider text-[#00f0ff] group-hover:text-white group-hover:bg-[#00f0ff]/20 px-3.5 py-1.5 rounded-full border border-[#00f0ff]/30 hover:border-[#00f0ff] transition-all cursor-pointer shadow-[0_0_10px_rgba(0,240,255,0.15)]"
+                    className="flex items-center gap-2 text-xs font-medium tracking-wider text-[#cdb88a] group-hover:text-white group-hover:bg-[#cdb88a]/20 px-3.5 py-1.5 rounded-full border border-[#cdb88a]/30 hover:border-[#cdb88a] transition-all cursor-pointer"
                   >
                     <span>Yazıyı İncele</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -351,7 +351,7 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
             {selectedCategory !== 'all' && (
               <button
                 onClick={() => onSelectCategory('all')}
-                className="px-4 py-2 rounded-full text-xs text-purple-300 border border-purple-400/40 hover:bg-purple-400/10 cursor-pointer transition-all"
+                className="px-4 py-2 rounded-full text-xs text-slate-300 border border-slate-500/40 hover:bg-slate-400/10 cursor-pointer transition-all"
               >
                 Kategori Filtresini Sıfırla
               </button>
@@ -361,7 +361,7 @@ export const ContentGrid: React.FC<ContentGridProps> = ({
                 onSelectCategory('all');
                 setSelectedPeriod('all');
               }}
-              className="px-4 py-2 rounded-full text-xs text-[#00f0ff] border border-[#00f0ff]/40 hover:bg-[#00f0ff]/10 cursor-pointer transition-all"
+              className="px-4 py-2 rounded-full text-xs text-[#cdb88a] border border-[#cdb88a]/40 hover:bg-[#cdb88a]/10 cursor-pointer transition-all"
             >
               Tüm Külliyatı Göster
             </button>

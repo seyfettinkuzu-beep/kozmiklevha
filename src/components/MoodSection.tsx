@@ -31,7 +31,7 @@ export const MoodSection: React.FC<MoodSectionProps> = ({ onOpenConsole }) => {
   return (
     <section id="seslerin-tesiri" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="max-w-3xl mb-10">
-        <div className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-[#00f0ff] uppercase mb-3">
+        <div className="inline-flex items-center gap-2 text-xs font-mono tracking-wider text-[#cdb88a] uppercase mb-3">
           <Ear className="w-3.5 h-3.5" />
           <span>Sesin İnsana Tesiri</span>
         </div>

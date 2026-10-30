@@ -105,7 +105,7 @@ export const FrequencyConsole: React.FC<FrequencyConsoleProps> = ({ isOpen, onCl
       g.setTransform(dpr, 0, 0, dpr, 0, 0);
       g.clearRect(0, 0, w, h);
       const an = ambient.analyser;
-      const accent = s.mode === 'tone' ? '#b000ff' : mood.accent;
+      const accent = s.mode === 'tone' ? '#8e9cc4' : mood.accent;
 
       if (an && s.playing) {
         if (!freqData || freqData.length !== an.frequencyBinCount) {
@@ -178,23 +178,23 @@ export const FrequencyConsole: React.FC<FrequencyConsoleProps> = ({ isOpen, onCl
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto bg-[#060914] border border-[#b000ff]/40 rounded-t-3xl sm:rounded-3xl p-5 sm:p-8 shadow-[0_0_60px_rgba(176,0,255,0.25)]"
+        className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto bg-[#060914] border border-[#8e9cc4]/40 rounded-t-3xl sm:rounded-3xl p-5 sm:p-8"
       >
         <div
           className="absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl pointer-events-none opacity-30 transition-colors duration-1000"
-          style={{ background: s.mode === 'tone' ? '#b000ff' : mood.accent }}
+          style={{ background: s.mode === 'tone' ? '#8e9cc4' : mood.accent }}
         />
 
         {/* Başlık */}
         <div className="relative flex items-center justify-between mb-5 pb-4 border-b border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-[#0e081e] border border-[#b000ff]/40">
-              <Radio className={`w-5 h-5 text-[#b000ff] ${s.playing ? 'animate-pulse' : ''}`} />
+            <div className="p-2.5 rounded-xl bg-[#0e081e] border border-[#8e9cc4]/40">
+              <Radio className={`w-5 h-5 text-[#8e9cc4] ${s.playing ? '' : ''}`} />
             </div>
             <div>
               <h3 className="font-cinzel text-lg sm:text-xl font-bold text-white flex items-center gap-2">
                 Frekans & Rezonans Odası
-                <Sparkles className="w-4 h-4 text-[#00f0ff]" />
+                <Sparkles className="w-4 h-4 text-[#cdb88a]" />
               </h3>
               <p className="text-xs text-slate-400 font-mono">
                 {s.tuning} Hz akortlu, canlı üretilen ambient müzik
@@ -231,9 +231,9 @@ export const FrequencyConsole: React.FC<FrequencyConsoleProps> = ({ isOpen, onCl
         </div>
 
         {/* Görselleştirici */}
-        <div className="relative mb-5 p-3 rounded-2xl bg-[#03050a] border border-[#00f0ff]/20">
+        <div className="relative mb-5 p-3 rounded-2xl bg-[#03050a] border border-[#cdb88a]/20">
           <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-1">
-            <span style={{ color: s.mode === 'tone' ? '#c084fc' : mood.accent }}>
+            <span style={{ color: s.mode === 'tone' ? '#a9b5d6' : mood.accent }}>
               {s.mode === 'tone'
                 ? `Saf ton: ${s.toneFreq} Hz`
                 : s.mode === 'mood'
@@ -362,7 +362,7 @@ export const FrequencyConsole: React.FC<FrequencyConsoleProps> = ({ isOpen, onCl
                     key={t}
                     onClick={() => ambient.setTuning(t)}
                     className={`px-2.5 py-1 rounded-md font-mono cursor-pointer border ${
-                      s.tuning === t ? 'border-[#00f0ff] text-[#00f0ff]' : 'border-slate-800 hover:text-white'
+                      s.tuning === t ? 'border-[#cdb88a] text-[#cdb88a]' : 'border-slate-800 hover:text-white'
                     }`}
                   >
                     {t} Hz
@@ -380,7 +380,7 @@ export const FrequencyConsole: React.FC<FrequencyConsoleProps> = ({ isOpen, onCl
                       ambient.setSleepTimer(m);
                     }}
                     className={`px-2 py-1 rounded-md font-mono cursor-pointer border ${
-                      sleepMinutes === m ? 'border-[#00f0ff] text-[#00f0ff]' : 'border-slate-800 hover:text-white'
+                      sleepMinutes === m ? 'border-[#cdb88a] text-[#cdb88a]' : 'border-slate-800 hover:text-white'
                     }`}
                   >
                     {m === 0 ? 'yok' : `${m} dk`}
@@ -400,13 +400,13 @@ export const FrequencyConsole: React.FC<FrequencyConsoleProps> = ({ isOpen, onCl
                     onClick={() => (active ? ambient.stop() : ambient.startTone(track.freq))}
                     className={`text-left p-4 rounded-xl border transition-all cursor-pointer ${
                       active
-                        ? 'bg-[#0f0e26] border-[#b000ff] shadow-[0_0_20px_rgba(176,0,255,0.3)]'
+                        ? 'bg-[#0f0e26] border-[#8e9cc4]'
                         : 'bg-[#060a14]/60 border-slate-800 hover:border-slate-700'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
                       <span className="font-cinzel text-sm font-bold text-white">{track.name}</span>
-                      <span className="text-[11px] font-mono text-[#00f0ff] px-2 py-0.5 rounded bg-[#00f0ff]/10 flex items-center gap-1">
+                      <span className="text-[11px] font-mono text-[#cdb88a] px-2 py-0.5 rounded bg-[#cdb88a]/10 flex items-center gap-1">
                         {active ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
                         {track.freq} Hz
                       </span>
@@ -448,7 +448,7 @@ export const FrequencyConsole: React.FC<FrequencyConsoleProps> = ({ isOpen, onCl
               step="0.01"
               value={s.volume}
               onChange={(e) => ambient.setVolume(parseFloat(e.target.value))}
-              className="w-full sm:w-32 accent-[#00f0ff] cursor-pointer"
+              className="w-full sm:w-32 accent-[#cdb88a] cursor-pointer"
               aria-label="Ses seviyesi"
             />
           </div>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { CosmicBackground } from './components/CosmicBackground';
-import { StardustCursor } from './components/StardustCursor';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { ContentGrid } from './components/ContentGrid';
@@ -35,12 +34,9 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#030508] text-slate-100 selection:bg-[#00f0ff] selection:text-black">
+    <div className="relative min-h-screen bg-[#0d0f14] text-slate-100 selection:bg-[#cdb88a] selection:text-black">
       {/* Background Interactive Cosmic Canvas */}
       <CosmicBackground />
-
-      {/* Stardust Trail Cursor Effect */}
-      <StardustCursor />
 
       {/* Global Navbar */}
       <Navbar
@@ -64,16 +60,16 @@ export default function App() {
 
         {/* Interactive Cosmic Manifesto & Resonance Strip */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-[#070b16]/90 via-[#0a0d20]/80 to-[#0d071d]/90 border border-[#00f0ff]/20 backdrop-blur-2xl shadow-[0_0_40px_rgba(0,240,255,0.08)] relative overflow-hidden">
+          <div className="rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-[#070b16]/90 via-[#0a0d20]/80 to-[#0d071d]/90 border border-[#cdb88a]/20 backdrop-blur-2xl relative overflow-hidden">
             {/* Glow background accents */}
-            <div className="absolute -top-12 -left-12 w-48 h-48 bg-[#00f0ff]/15 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-[#b000ff]/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -top-12 -left-12 w-48 h-48 bg-[#cdb88a]/15 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-[#8e9cc4]/20 rounded-full blur-3xl pointer-events-none" />
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               {/* Left text */}
               <div className="lg:col-span-7 space-y-4">
-                <div className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-[#00ff88] uppercase">
-                  <Sparkles className="w-3.5 h-3.5 text-[#00ff88]" />
+                <div className="inline-flex items-center gap-2 text-xs font-mono tracking-wider text-[#9fb8a3] uppercase">
+                  <Sparkles className="w-3.5 h-3.5 text-[#9fb8a3]" />
                   <span>Kozmik Levha Prensibi</span>
                 </div>
                 <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white tracking-wide">
@@ -85,28 +81,28 @@ export default function App() {
 
                 <div className="pt-2 flex flex-wrap gap-4 text-xs font-mono text-slate-400">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#00f0ff]" />
+                    <span className="w-2 h-2 rounded-full bg-[#cdb88a]" />
                     <span className="text-slate-200">Fraktal Geometri</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#b000ff]" />
+                    <span className="w-2 h-2 rounded-full bg-[#8e9cc4]" />
                     <span className="text-slate-200">Harmonik Akort</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#00ff88]" />
+                    <span className="w-2 h-2 rounded-full bg-[#9fb8a3]" />
                     <span className="text-slate-200">Biyolüminesans</span>
                   </div>
                 </div>
               </div>
 
               {/* Right Quick Interactive Console Card */}
-              <div className="lg:col-span-5 bg-[#03060f]/80 border border-[#b000ff]/30 rounded-2xl p-6 shadow-[0_0_25px_rgba(176,0,255,0.15)] flex flex-col justify-between">
+              <div className="lg:col-span-5 bg-[#03060f]/80 border border-[#8e9cc4]/30 rounded-2xl p-6 flex flex-col justify-between">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-mono text-[#b000ff] flex items-center gap-1.5">
+                  <span className="text-xs font-mono text-[#8e9cc4] flex items-center gap-1.5">
                     <Radio className="w-4 h-4" />
                     Canlı Ambient Jeneratörü
                   </span>
-                  <span className="text-[10px] font-mono bg-[#00ff88]/10 text-[#00ff88] border border-[#00ff88]/30 px-2 py-0.5 rounded">
+                  <span className="text-[10px] font-mono bg-[#9fb8a3]/10 text-[#9fb8a3] border border-[#9fb8a3]/30 px-2 py-0.5 rounded">
                     432 Hz Kalibre
                   </span>
                 </div>
@@ -114,25 +110,25 @@ export default function App() {
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center justify-between text-xs text-slate-300">
                     <span className="flex items-center gap-2">
-                      <Waves className="w-4 h-4 text-[#00f0ff]" />
+                      <Waves className="w-4 h-4 text-[#cdb88a]" />
                       Müzik Modları
                     </span>
-                    <span className="font-mono text-[#00f0ff]">5 Ruh Hali</span>
+                    <span className="font-mono text-[#cdb88a]">5 Ruh Hali</span>
                   </div>
                   <div className="flex items-center justify-between text-xs text-slate-300">
                     <span className="flex items-center gap-2">
-                      <Activity className="w-4 h-4 text-[#b000ff]" />
+                      <Activity className="w-4 h-4 text-[#8e9cc4]" />
                       Katmanlar
                     </span>
-                    <span className="font-mono text-purple-300">Ritim · Melodi · Doğa</span>
+                    <span className="font-mono text-slate-300">Ritim · Melodi · Doğa</span>
                   </div>
                 </div>
 
                 <button
                   onClick={() => setFrequencyConsoleOpen(true)}
-                  className="w-full py-2.5 rounded-xl font-medium text-xs tracking-wider text-white bg-gradient-to-r from-[#b000ff] to-[#00f0ff] hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(176,0,255,0.4)] cursor-pointer"
+                  className="w-full py-2.5 rounded-xl font-medium text-xs tracking-wider text-white bg-gradient-to-r from-[#8e9cc4] to-[#cdb88a] hover:opacity-90 transition-opacity flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <Zap className="w-3.5 h-3.5 text-yellow-300" />
+                  <Zap className="w-3.5 h-3.5 text-amber-200" />
                   <span>Rezonans Odasını Aç</span>
                 </button>
               </div>

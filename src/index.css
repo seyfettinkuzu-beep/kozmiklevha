@@ -2,12 +2,12 @@
 
 @layer base {
   body {
-    background-color: #030508;
+    background-color: #0d0f14;
     color: #e2e8f0;
     font-family: 'Plus Jakarta Sans', sans-serif;
     overflow-x: hidden;
-    selection-background-color: #00f0ff;
-    selection-color: #030508;
+    selection-background-color: #cdb88a;
+    selection-color: #0d0f14;
   }
 }
 
@@ -20,56 +20,56 @@
   background: rgba(8, 12, 20, 0.65);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 240, 255, 0.15);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.57), 0 0 15px rgba(0, 240, 255, 0.05);
+  border: 1px solid rgba(205, 184, 138, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.57), 0 0 15px rgba(205, 184, 138, 0.05);
 }
 
 .glass-panel:hover {
-  border-color: rgba(0, 240, 255, 0.35);
-  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 240, 255, 0.12);
+  border-color: rgba(205, 184, 138, 0.35);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.7), 0 0 25px rgba(205, 184, 138, 0.12);
 }
 
 .glass-panel-purple {
   background: rgba(12, 8, 24, 0.65);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(176, 0, 255, 0.2);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.57), 0 0 15px rgba(176, 0, 255, 0.08);
+  border: 1px solid rgba(142, 156, 196, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.57), 0 0 15px rgba(142, 156, 196, 0.08);
 }
 
 .glass-panel-purple:hover {
-  border-color: rgba(176, 0, 255, 0.4);
-  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.7), 0 0 25px rgba(176, 0, 255, 0.15);
+  border-color: rgba(142, 156, 196, 0.4);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.7), 0 0 25px rgba(142, 156, 196, 0.15);
 }
 
 .neon-text-cyan {
-  color: #00f0ff;
-  text-shadow: 0 0 12px rgba(0, 240, 255, 0.6), 0 0 28px rgba(0, 240, 255, 0.2);
+  color: #cdb88a;
+  text-shadow: none;
 }
 
 .neon-text-purple {
-  color: #c744ff;
-  text-shadow: 0 0 12px rgba(176, 0, 255, 0.65), 0 0 30px rgba(176, 0, 255, 0.25);
+  color: #a9b5d6;
+  text-shadow: none;
 }
 
 .neon-text-green {
-  color: #00ff88;
-  text-shadow: 0 0 12px rgba(0, 255, 136, 0.6), 0 0 25px rgba(0, 255, 136, 0.2);
+  color: #9fb8a3;
+  text-shadow: none;
 }
 
 .neon-border-cyan {
-  border-color: #00f0ff;
-  box-shadow: 0 0 18px rgba(0, 240, 255, 0.35);
+  border-color: #cdb88a;
+  
 }
 
 .neon-border-purple {
-  border-color: #b000ff;
-  box-shadow: 0 0 18px rgba(176, 0, 255, 0.35);
+  border-color: #8e9cc4;
+  
 }
 
 .neon-border-green {
-  border-color: #00ff88;
-  box-shadow: 0 0 18px rgba(0, 255, 136, 0.35);
+  border-color: #9fb8a3;
+  
 }
 
 /* Custom orbital spin keyframes */
@@ -103,11 +103,11 @@
 }
 
 .animate-spin-slow {
-  animation: spinSlow 38s linear infinite;
+  animation: spinSlow 140s linear infinite;
 }
 
 .animate-spin-reverse-slow {
-  animation: spinReverseSlow 48s linear infinite;
+  animation: spinReverseSlow 180s linear infinite;
 }
 
 .animate-pulse-glow {

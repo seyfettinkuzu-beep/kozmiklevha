@@ -18,26 +18,26 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   return (
     <section className="relative pt-28 pb-12 lg:pb-16 overflow-hidden">
       {/* Background radial ambient lights */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] sm:w-[700px] h-[500px] sm:h-[700px] bg-gradient-to-tr from-[#b000ff]/20 via-[#00f0ff]/15 to-[#00ff88]/10 rounded-full blur-[140px] pointer-events-none -z-10 animate-pulse-glow" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] sm:w-[700px] h-[500px] sm:h-[700px] bg-gradient-to-tr from-[#8e9cc4]/20 via-[#cdb88a]/15 to-[#9fb8a3]/10 rounded-full blur-[140px] pointer-events-none -z-10" />
 
       {/* Main Centerpiece Container */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] items-center gap-10 lg:gap-14">
         {/* Sol sütun: metin (mobilde görselin altında) */}
         <div className="order-2 lg:order-1 flex flex-col items-center lg:items-start text-center lg:text-left">
         {/* Top Tagline Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#080d1a]/80 border border-[#00f0ff]/30 text-[#00f0ff] text-[10px] sm:text-xs tracking-[0.2em] font-mono mb-6 shadow-[0_0_20px_rgba(0,240,255,0.2)] backdrop-blur-md">
-          <Sparkles className="w-3.5 h-3.5 text-[#00ff88] animate-spin-slow" />
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#080d1a]/80 border border-[#cdb88a]/30 text-[#cdb88a] text-[10px] sm:text-xs tracking-[0.1em] font-mono mb-6 backdrop-blur-md">
+          <Sparkles className="w-3.5 h-3.5 text-[#9fb8a3]" />
           <span>BİYOLOJİK & KOZMİK REZONANS MANİFESTOSU</span>
-          <span className="w-1.5 h-1.5 rounded-full bg-[#00f0ff] animate-ping" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#cdb88a]" />
         </div>
 
         {/* Ana Başlık */}
-        <h1 className="font-cinzel text-4xl sm:text-5xl xl:text-6xl font-black tracking-[0.12em] text-white drop-shadow-[0_0_25px_rgba(0,240,255,0.4)] mb-4">
+        <h1 className="font-cinzel text-4xl sm:text-5xl xl:text-6xl font-black tracking-[0.12em] text-white drop- mb-4">
           KOZMİK LEVHA
         </h1>
 
         {/* Vurucu Slogan */}
-        <p className="text-lg sm:text-xl xl:text-2xl font-medium tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] via-[#e2e8f0] to-[#b000ff] max-w-xl lg:mx-0 mx-auto mb-4 leading-relaxed drop-shadow-[0_0_15px_rgba(0,240,255,0.3)]">
+        <p className="text-lg sm:text-xl xl:text-2xl font-medium tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-[#cdb88a] via-[#e2e8f0] to-[#8e9cc4] max-w-xl lg:mx-0 mx-auto mb-4 leading-relaxed drop-">
           "Nöronlardan Galaksilere, Yaşamın ve Frekansın Gizli Ağı."
         </p>
 
@@ -51,7 +51,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <button
             id="hero-explore-btn"
             onClick={onExploreClick}
-            className="group relative px-6 py-3 rounded-full font-medium text-sm tracking-wider text-black bg-[#00f0ff] hover:bg-white shadow-[0_0_25px_rgba(0,240,255,0.6)] hover:shadow-[0_0_35px_rgba(255,255,255,0.8)] transition-all duration-300 cursor-pointer flex items-center gap-2"
+            className="group relative px-6 py-3 rounded-full font-medium text-sm tracking-wider text-black bg-[#cdb88a] hover:bg-white transition-all duration-300 cursor-pointer flex items-center gap-2"
           >
             <Compass className="w-4 h-4 text-black group-hover:rotate-45 transition-transform" />
             <span>Kozmik Diline Dal</span>
@@ -60,9 +60,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <button
             id="hero-frequency-btn"
             onClick={onOpenFrequencyConsole}
-            className="group px-6 py-3 rounded-full font-medium text-sm tracking-wider text-purple-200 bg-[#0c0f20]/80 hover:bg-[#161230] border border-[#b000ff]/50 hover:border-[#b000ff] shadow-[0_0_20px_rgba(176,0,255,0.3)] hover:shadow-[0_0_30px_rgba(176,0,255,0.6)] transition-all duration-300 cursor-pointer flex items-center gap-2 backdrop-blur-md"
+            className="group px-6 py-3 rounded-full font-medium text-sm tracking-wider text-slate-200 bg-[#0c0f20]/80 hover:bg-[#161230] border border-[#8e9cc4]/50 hover:border-[#8e9cc4] transition-all duration-300 cursor-pointer flex items-center gap-2 backdrop-blur-md"
           >
-            <Radio className="w-4 h-4 text-[#b000ff] group-hover:animate-ping" />
+            <Radio className="w-4 h-4 text-[#8e9cc4]" />
             <span>Frekans & Rezonans Odası</span>
           </button>
 
@@ -71,8 +71,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             onClick={onToggleAudio}
             className={`px-5 py-3 rounded-full font-mono text-xs tracking-wider border transition-all duration-300 flex items-center gap-2 cursor-pointer ${
               isAudioPlaying
-                ? 'bg-[#00ff88]/15 border-[#00ff88] text-[#00ff88] shadow-[0_0_20px_rgba(0,255,136,0.4)]'
-                : 'bg-transparent border-slate-700/70 text-slate-300 hover:border-[#00ff88]/50 hover:text-[#00ff88]'
+                ? 'bg-[#9fb8a3]/15 border-[#9fb8a3] text-[#9fb8a3]'
+                : 'bg-transparent border-slate-700/70 text-slate-300 hover:border-[#9fb8a3]/50 hover:text-[#9fb8a3]'
             }`}
           >
             <Zap className="w-3.5 h-3.5" />
@@ -87,41 +87,41 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {/* Hero Visual: Devasa merkezde konumlanmış parlayan kozmik-biyolojik ana illüstrasyon */}
           <div className="relative w-56 h-56 sm:w-72 sm:h-72 lg:w-[320px] lg:h-[320px] xl:w-[360px] xl:h-[360px] group flex items-center justify-center">
             {/* External Orbital Sacred Geometry Rings */}
-            <div className="absolute inset-[-18px] sm:inset-[-24px] rounded-full border border-dashed border-[#00f0ff]/30 animate-spin-slow pointer-events-none" />
-            <div className="absolute inset-[-34px] sm:inset-[-44px] rounded-full border border-[#b000ff]/25 animate-spin-reverse-slow pointer-events-none" />
+            <div className="absolute inset-[-18px] sm:inset-[-24px] rounded-full border border-dashed border-[#cdb88a]/30 animate-spin-slow pointer-events-none" />
+            <div className="absolute inset-[-34px] sm:inset-[-44px] rounded-full border border-[#8e9cc4]/25 animate-spin-reverse-slow pointer-events-none" />
           
             {/* Subtle celestial crosshairs */}
-            <div className="absolute w-full h-[1px] bg-gradient-to-r from-transparent via-[#00f0ff]/30 to-transparent pointer-events-none" />
-            <div className="absolute h-full w-[1px] bg-gradient-to-b from-transparent via-[#b000ff]/30 to-transparent pointer-events-none" />
+            <div className="absolute w-full h-[1px] bg-gradient-to-r from-transparent via-[#cdb88a]/30 to-transparent pointer-events-none" />
+            <div className="absolute h-full w-[1px] bg-gradient-to-b from-transparent via-[#8e9cc4]/30 to-transparent pointer-events-none" />
 
             {/* Deep Glow Behind Image */}
-            <div className="absolute inset-0 rounded-full bg-[#00f0ff]/25 blur-2xl filter group-hover:bg-[#00f0ff]/40 transition-all duration-700 pointer-events-none" />
-            <div className="absolute inset-4 rounded-full bg-[#b000ff]/25 blur-xl filter group-hover:bg-[#b000ff]/40 transition-all duration-700 pointer-events-none" />
+            <div className="absolute inset-0 rounded-full bg-[#cdb88a]/25 blur-2xl filter group-hover:bg-[#cdb88a]/40 transition-all duration-700 pointer-events-none" />
+            <div className="absolute inset-4 rounded-full bg-[#8e9cc4]/25 blur-xl filter group-hover:bg-[#8e9cc4]/40 transition-all duration-700 pointer-events-none" />
 
             {/* Main Hero Emblem Disc */}
-            <div className="relative w-full h-full rounded-full overflow-hidden p-1.5 bg-gradient-to-tr from-[#00f0ff] via-[#b000ff] to-[#00ff88] shadow-[0_0_45px_rgba(0,240,255,0.4),0_0_80px_rgba(176,0,255,0.3)] transition-transform duration-500 group-hover:scale-[1.02]">
-              <div className="w-full h-full rounded-full overflow-hidden bg-[#030508] relative">
+            <div className="relative w-full h-full rounded-full overflow-hidden p-1.5 bg-gradient-to-tr from-[#cdb88a] via-[#8e9cc4] to-[#9fb8a3] transition-transform duration-500 group-hover:scale-[1.02]">
+              <div className="w-full h-full rounded-full overflow-hidden bg-[#0d0f14] relative">
                 <img
                   src={HERO_IMAGE}
                   alt="Kozmik Levha Nöron Ağları ve Galaktik Sarmal İllüstrasyonu"
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover rounded-full filter contrast-110 brightness-105 group-hover:scale-105 transition-transform duration-700"
+                  className="saturate-[0.6] w-full h-full object-cover rounded-full filter contrast-110 brightness-105 group-hover:scale-105 transition-transform duration-700"
                 />
 
                 {/* Shimmer overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#030508]/60 via-transparent to-[#00f0ff]/15 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0d0f14]/60 via-transparent to-[#cdb88a]/15 pointer-events-none" />
               </div>
             </div>
 
             {/* Floating Bio-Orbital Chips */}
-            <div className="hidden md:flex absolute -left-12 top-1/4 items-center gap-2 px-3 py-1.5 rounded-xl bg-[#090e1c]/90 border border-[#00f0ff]/30 shadow-[0_0_15px_rgba(0,240,255,0.25)] text-xs text-slate-200 backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-pulse" />
-              <span className="font-mono text-[#00f0ff]">10¹¹</span> Nöron ~ Galaksi
+            <div className="hidden md:flex absolute -left-12 top-1/4 items-center gap-2 px-3 py-1.5 rounded-xl bg-[#090e1c]/90 border border-[#cdb88a]/30 text-xs text-slate-200 backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-[#cdb88a]" />
+              <span className="font-mono text-[#cdb88a]">10¹¹</span> Nöron ~ Galaksi
             </div>
 
-            <div className="hidden md:flex absolute -right-12 bottom-1/4 items-center gap-2 px-3 py-1.5 rounded-xl bg-[#110b24]/90 border border-[#b000ff]/40 shadow-[0_0_15px_rgba(176,0,255,0.25)] text-xs text-slate-200 backdrop-blur-md">
-              <Radio className="w-3.5 h-3.5 text-[#b000ff]" />
-              <span className="font-mono text-purple-300">7.83 Hz</span> Schumann Nabzı
+            <div className="hidden md:flex absolute -right-12 bottom-1/4 items-center gap-2 px-3 py-1.5 rounded-xl bg-[#110b24]/90 border border-[#8e9cc4]/40 text-xs text-slate-200 backdrop-blur-md">
+              <Radio className="w-3.5 h-3.5 text-[#8e9cc4]" />
+              <span className="font-mono text-slate-300">7.83 Hz</span> Schumann Nabzı
             </div>
           </div>
         </div>
@@ -129,12 +129,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         {/* Scroll Indicator */}
         <button
           onClick={onExploreClick}
-          className="order-3 lg:hidden flex flex-col items-center text-slate-400 hover:text-[#00f0ff] transition-colors cursor-pointer group"
+          className="order-3 lg:hidden flex flex-col items-center text-slate-400 hover:text-[#cdb88a] transition-colors cursor-pointer group"
         >
-          <span className="text-[11px] tracking-[0.25em] font-mono uppercase mb-2 group-hover:tracking-[0.3em] transition-all">
+          <span className="text-[11px] tracking-[0.12em] font-mono uppercase mb-2 group-hover:tracking-[0.12em] transition-all">
             Aşağı Kaydır
           </span>
-          <ArrowDown className="w-4 h-4 text-[#00f0ff] animate-bounce" />
+          <ArrowDown className="w-4 h-4 text-[#cdb88a]" />
         </button>
       </div>
     </section>
