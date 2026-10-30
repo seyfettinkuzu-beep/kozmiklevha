@@ -1,0 +1,10 @@
+# ad|kaynak url|eni
+webb-pillars|https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Pillars_of_Creation_%28NIRCam_Image%29.jpg/1920px-Pillars_of_Creation_%28NIRCam_Image%29.jpg|1800
+hubble-deep-field|https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Hubble_ultra_deep_field_high_rez_edit1.jpg/1920px-Hubble_ultra_deep_field_high_rez_edit1.jpg|1800
+crab-nebula|https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Crab_Nebula.jpg/1920px-Crab_Nebula.jpg|1800
+lightning|https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Lightning_over_Oradea_Romania_2.jpg/1920px-Lightning_over_Oradea_Romania_2.jpg|1800
+dinoflagellates|https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Bioluminescent_dinoflagellates.jpg/1920px-Bioluminescent_dinoflagellates.jpg|1800
+pyramidal-neuron|https://upload.wikimedia.org/wikipedia/commons/d/dc/Pyramidal_hippocampal_neuron_40x.jpg|1344
+cajal-cortex|https://upload.wikimedia.org/wikipedia/commons/5/5b/Cajal_cortex_drawings.png|672
+earth-night|https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/The_earth_at_night.jpg/1920px-The_earth_at_night.jpg|1800
+wmap-cmb|https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/WMAP_2012.png/1920px-WMAP_2012.png|1800

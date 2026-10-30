@@ -1,0 +1,30 @@
+name: Fotoğrafları indir
+on:
+  push:
+    branches: [main]
+    paths: ['.github/photos.txt']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get -qq install -y imagemagick >/dev/null || true
+      - name: İndir ve küçült
+        run: |
+          mkdir -p src/assets/photos
+          grep -v '^#' .github/photos.txt | while IFS='|' read -r name url width; do
+            [ -z "$name" ] && continue
+            curl -fsSL -A "KozmikLevha/1.0 (https://github.com/seyfettinkuzu-beep/kozmiklevha)" "$url" -o "/tmp/$name.src"
+            convert "/tmp/$name.src" -background '#f6f1e7' -flatten -resize "${width}x>" -strip -interlace Plane -quality 82 "src/assets/photos/$name.jpg"
+            ls -la "src/assets/photos/$name.jpg"
+          done
+      - name: Kaydet
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add src/assets/photos
+          git diff --cached --quiet || git commit -m "Gerçek fotoğraflar eklendi (Wikimedia Commons)"
+          git push
