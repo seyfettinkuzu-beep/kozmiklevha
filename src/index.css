@@ -1,15 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  --color-paper: #f6f1e7;
-  --color-card: #fffdf8;
-  --color-line: #e4d9c5;
-  --color-ink: #1f2433;
-  --color-body: #3d4252;
-  --color-muted: #747886;
-  --color-gold: #94743a;
-  --color-navy: #2c3e63;
-  --color-sage: #5c7c67;
+  --color-paper: #ffffff;
+  --color-card: #ffffff;
+  --color-soft: #f3ead6;
+  --color-line: #e6e3dc;
+  --color-ink: #111522;
+  --color-body: #3c4150;
+  --color-muted: #7d808a;
+  --color-gold: #b08a45;
+  --color-night: #141b2e;
+  --color-navy: #33509a;
+  --color-sage: #2f6b47;
+  --color-c-neuro: #3f63b5;
+  --color-c-bio: #3f8a5f;
+  --color-c-res: #7a5cc4;
+  --color-c-alc: #c08a2e;
   --font-serif: 'Fraunces', Georgia, serif;
   --font-read: 'Source Serif 4', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
@@ -24,7 +30,7 @@
     -webkit-font-smoothing: antialiased;
   }
   ::selection {
-    background: #e9dcbf;
+    background: #f0e2c2;
     color: var(--color-ink);
   }
 }
@@ -34,7 +40,7 @@
   font-family: var(--font-read);
   font-size: 1.125rem;
   line-height: 1.85;
-  color: #2f3442;
+  color: #2b2f3b;
   margin-bottom: 1.4em;
 }
 .reading p:first-of-type::first-letter {
@@ -163,4 +169,30 @@
 @keyframes fadeWord {
   from { opacity: 0; transform: translateY(6px); filter: blur(4px); }
   to { opacity: 1; transform: none; filter: none; }
+}
+
+/* Dergi başlıkları: kalın, sıkı serif */
+.headline {
+  font-family: var(--font-serif);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  font-variation-settings: 'opsz' 144;
+  color: var(--color-ink);
+}
+.kicker {
+  display: inline-block;
+  font-size: 11.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-ink);
+  padding-bottom: 5px;
+  border-bottom: 3px solid currentColor;
+}
+.kicker > span { color: var(--color-ink); }
+.byline {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
 }

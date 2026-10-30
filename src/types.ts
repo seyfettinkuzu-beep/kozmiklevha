@@ -39,6 +39,8 @@ export interface Article {
   author: string;
   date: string;
   image: string;
+  /** Görsel künyesi (kaynak ve lisans) */
+  credit?: string;
   highlights: string[];
   tag: string;
   /** bilim: yerleşik bilgi · yorum: bilimsel bulgu + yorum · dusunce: spekülatif/felsefi */

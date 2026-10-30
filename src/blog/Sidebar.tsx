@@ -1,24 +1,69 @@
 import React from 'react';
-import { Radio, Play, Pause } from 'lucide-react';
-import { ARTICLES, CATEGORIES } from '../data/cosmicData';
+import { Play, Pause } from 'lucide-react';
+import { ARTICLES } from '../data/cosmicData';
 import { MOODS } from '../audio/moods';
 import { ambient } from '../audio/ambientEngine';
 import { useAmbient } from '../components/FrequencyConsole';
 import { links } from './router';
-import { NATURE } from './parts';
+import { SectionTitle } from './parts';
 
-export const Sidebar: React.FC<{ onOpenRoom: () => void }> = ({ onOpenRoom }) => {
+const GLOSSARY = [
+  ['Schumann rezonansı', "Şimşeklerin Dünya ile iyonosfer arasında oluşturduğu yaklaşık 7,83 Hz'lik doğal titreşim."],
+  ['Biyofoton', 'Canlı hücrelerin yaydığı, gözle görülemeyecek kadar zayıf ışık.'],
+  ['Kozmik ağ', 'Galaksileri ipliksi yapılarla birbirine bağlayan dev evren dokusu.'],
+  ['Nükleosentez', 'Yıldızların içinde hafif elementlerden ağır elementlerin oluşması.'],
+];
+
+// Henüz okunma verisi yok; editörün seçtiği sıra.
+const POPULAR = ['neuro-web', 'schumann-resonance', 'primordial-resonance', 'cosmic-noosphere'];
+
+export const Sidebar: React.FC<{ onOpenRoom: () => void; showPopular?: boolean }> = ({ onOpenRoom, showPopular = true }) => {
   const s = useAmbient();
+  const popular = POPULAR.map((id) => ARTICLES.find((a) => a.id === id)!).filter(Boolean);
   return (
-    <aside className="space-y-6">
-      {/* Frekans odası kartı */}
-      <section className="rounded-2xl bg-ink text-paper p-5">
-        <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-[#d9c49a] mb-2">
-          <Radio className="w-3.5 h-3.5" />
-          Frekans Odası
+    <aside className="space-y-10">
+      {showPopular && (
+        <section>
+          <SectionTitle>Öne çıkanlar</SectionTitle>
+          <ul>
+            {popular.map((a, i) => (
+              <li key={a.id} className="border-b border-line">
+                <a href={links.article(a.id)} className="group grid grid-cols-[34px_1fr] gap-2 py-4">
+                  <span className="font-serif font-extrabold text-[26px] leading-none text-gold">{i + 1}</span>
+                  <span>
+                    <span className="block font-serif font-bold text-[17px] leading-snug text-ink group-hover:text-navy transition-colors">
+                      {a.title}
+                    </span>
+                    <span className="byline block mt-1.5">{a.categoryName}</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <section>
+        <SectionTitle>Kozmik sözlük</SectionTitle>
+        <dl>
+          {GLOSSARY.map(([t, d]) => (
+            <div key={t} className="mt-4">
+              <dt className="font-serif font-bold text-[17px] text-ink">{t}</dt>
+              <dd className="text-[13.5px] leading-relaxed text-body mt-1">{d}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <section className="bg-night text-[#efe8da] p-6 rounded-[4px]">
+        <div className="text-[11px] tracking-[0.2em] uppercase font-bold text-[#c9a96b]">Frekans Odası</div>
+        <div className="flex items-end gap-[3px] h-9 my-3" aria-hidden>
+          {[30, 70, 45, 90, 55, 75, 40, 85, 50, 65, 35, 60].map((h, i) => (
+            <i key={i} className="flex-1 bg-[#c9a96b]/85" style={{ height: `${h}%` }} />
+          ))}
         </div>
-        <p className="font-serif text-lg leading-snug mb-1">Okurken eşlik etsin.</p>
-        <p className="text-sm text-paper/70 mb-4">Ruh haline göre canlı üretilen ambient müzik.</p>
+        <p className="font-serif text-xl">Okurken eşlik etsin.</p>
+        <p className="text-[12.5px] text-[#a9a294] mt-1 mb-4">Ruh haline göre canlı üretilen ambient müzik.</p>
         <div className="flex flex-wrap gap-1.5 mb-4">
           {MOODS.map((m) => {
             const on = s.playing && s.mode === 'mood' && s.moodId === m.id;
@@ -27,7 +72,7 @@ export const Sidebar: React.FC<{ onOpenRoom: () => void }> = ({ onOpenRoom }) =>
                 key={m.id}
                 onClick={() => (on ? ambient.stop() : ambient.startMood(m.id))}
                 className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs border cursor-pointer transition-colors ${
-                  on ? 'bg-paper text-ink border-paper' : 'border-paper/25 text-paper/85 hover:border-paper/60'
+                  on ? 'bg-[#efe8da] text-night border-[#efe8da]' : 'border-[#efe8da]/25 text-[#efe8da]/85 hover:border-[#efe8da]/60'
                 }`}
               >
                 {on ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
@@ -36,42 +81,9 @@ export const Sidebar: React.FC<{ onOpenRoom: () => void }> = ({ onOpenRoom }) =>
             );
           })}
         </div>
-        <button onClick={onOpenRoom} className="text-xs text-[#d9c49a] hover:underline cursor-pointer">
+        <button onClick={onOpenRoom} className="text-xs text-[#c9a96b] hover:underline cursor-pointer">
           Odayı aç, katmanları ayarla →
         </button>
-      </section>
-
-      {/* Kategoriler */}
-      <section className="rounded-2xl bg-card border border-line p-5">
-        <h4 className="font-serif text-lg text-ink mb-3">Konular</h4>
-        <ul className="space-y-1">
-          {CATEGORIES.map((c) => (
-            <li key={c.id}>
-              <a
-                href={links.category(c.id)}
-                className="flex items-center justify-between py-1.5 text-sm text-body hover:text-ink"
-              >
-                <span>{c.name}</span>
-                <span className="text-xs text-muted">{ARTICLES.filter((a) => a.categoryId === c.id).length}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Etiketlerin anlamı */}
-      <section className="rounded-2xl bg-card border border-line p-5">
-        <h4 className="font-serif text-lg text-ink mb-3">Etiketler ne anlatıyor?</h4>
-        <ul className="space-y-3">
-          {Object.values(NATURE).map((n) => (
-            <li key={n.label} className="text-sm">
-              <span className={`inline-flex px-2 py-0.5 rounded-full border text-[11px] font-medium mb-1 ${n.cls}`}>
-                {n.label}
-              </span>
-              <p className="text-body/90 leading-relaxed text-[13px]">{n.hint}</p>
-            </li>
-          ))}
-        </ul>
       </section>
     </aside>
   );

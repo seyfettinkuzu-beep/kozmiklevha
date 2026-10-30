@@ -1,11 +1,16 @@
 import { Category, Article, ResonanceTrack, CosmicPeriod } from '../types';
-import img_cosmic_biology_card from '../assets/images/cosmic_biology_card_1788980400020.jpg';
-import img_cosmic_neural_core from '../assets/images/cosmic_neural_core_1788980356073.jpg';
-import img_mystic_alchemy_card from '../assets/images/mystic_alchemy_card_1788980426286.jpg';
-import img_neuro_cosmos_card from '../assets/images/neuro_cosmos_card_1788980374836.jpg';
-import img_resonance_card from '../assets/images/resonance_card_1788980414325.jpg';
+import ph_webb from '../assets/photos/webb-pillars.jpg';
+import ph_hudf from '../assets/photos/hubble-deep-field.jpg';
+import ph_crab from '../assets/photos/crab-nebula.jpg';
+import ph_lightning from '../assets/photos/lightning.jpg';
+import ph_dino from '../assets/photos/dinoflagellates.jpg';
+import ph_neuron from '../assets/photos/pyramidal-neuron.jpg';
+import ph_cajal from '../assets/photos/cajal-cortex.jpg';
+import ph_earth from '../assets/photos/earth-night.jpg';
 
-export const HERO_IMAGE = img_cosmic_neural_core;
+export const PHOTOS = { webb: ph_webb, hudf: ph_hudf, crab: ph_crab, lightning: ph_lightning, dino: ph_dino, neuron: ph_neuron, cajal: ph_cajal, earth: ph_earth };
+
+export const HERO_IMAGE = ph_webb;
 
 export const COSMIC_PERIODS: CosmicPeriod[] = [
   {
@@ -79,7 +84,7 @@ export const CATEGORIES: Category[] = [
     color: 'cyan',
     accentColorHex: '#cdb88a',
     iconName: 'BrainCircuit',
-    image: img_neuro_cosmos_card,
+    image: ph_cajal,
     stats: '10¹¹ Nöron ~ 10¹¹ Galaksi',
   },
   {
@@ -90,7 +95,7 @@ export const CATEGORIES: Category[] = [
     color: 'green',
     accentColorHex: '#9fb8a3',
     iconName: 'Dna',
-    image: img_cosmic_biology_card,
+    image: ph_dino,
     stats: '200-800 nm Biyofoton Spektrumu',
   },
   {
@@ -101,7 +106,7 @@ export const CATEGORIES: Category[] = [
     color: 'purple',
     accentColorHex: '#8e9cc4',
     iconName: 'Radio',
-    image: img_resonance_card,
+    image: ph_lightning,
     stats: '7.83 Hz Dünya ~ İnsan Rezonansı',
   },
   {
@@ -112,7 +117,7 @@ export const CATEGORIES: Category[] = [
     color: 'cyan',
     accentColorHex: '#cdb88a',
     iconName: 'Sparkles',
-    image: img_mystic_alchemy_card,
+    image: ph_crab,
     stats: '%99 Kozmik Kökenli Atomlar',
   },
 ];
@@ -130,7 +135,8 @@ export const ARTICLES: Article[] = [
     frequency: '0.0001 Hz',
     author: 'Kozmik Levha',
     date: '30 Ekim 2026',
-    image: img_resonance_card,
+    image: ph_hudf,
+    credit: 'NASA, ESA · Hubble Ultra Derin Alan',
     tag: 'İlksel Akustik',
     nature: 'bilim',
     highlights: [
@@ -156,7 +162,8 @@ export const ARTICLES: Article[] = [
     frequency: '963 Hz',
     author: 'Kozmik Levha',
     date: '30 Ekim 2026',
-    image: img_mystic_alchemy_card,
+    image: ph_webb,
+    credit: 'Yaratılış Sütunları · NASA, ESA, CSA, STScI (James Webb)',
     tag: 'Yıldız Tozu',
     nature: 'bilim',
     highlights: [
@@ -182,7 +189,8 @@ export const ARTICLES: Article[] = [
     frequency: '7.83 Hz',
     author: 'Kozmik Levha',
     date: '30 Ekim 2026',
-    image: img_resonance_card,
+    image: ph_lightning,
+    credit: 'Mircea Madau · Wikimedia Commons, kamu malı',
     tag: 'İyonosfer & Zihin',
     nature: 'yorum',
     highlights: [
@@ -208,7 +216,8 @@ export const ARTICLES: Article[] = [
     frequency: '528 Hz',
     author: 'Kozmik Levha',
     date: '30 Ekim 2026',
-    image: img_cosmic_biology_card,
+    image: ph_dino,
+    credit: 'Biyolüminesan plankton · catalano82, Wikimedia Commons, CC BY 2.0',
     tag: 'Biyofotonik',
     nature: 'yorum',
     highlights: [
@@ -234,7 +243,8 @@ export const ARTICLES: Article[] = [
     frequency: '432 Hz',
     author: 'Kozmik Levha',
     date: '30 Ekim 2026',
-    image: img_neuro_cosmos_card,
+    image: ph_neuron,
+    credit: 'Hipokampüs piramidal nöronu · MethoxyRoxy, Wikimedia Commons, CC BY-SA 2.5',
     tag: 'Fraktal Evren',
     nature: 'yorum',
     highlights: [
@@ -260,7 +270,8 @@ export const ARTICLES: Article[] = [
     frequency: '963 Hz',
     author: 'Kozmik Levha',
     date: '30 Ekim 2026',
-    image: img_cosmic_neural_core,
+    image: ph_earth,
+    credit: 'Gece Dünya · NASA Earth Observatory',
     tag: 'Gezegensel Zihin',
     nature: 'dusunce',
     highlights: [
