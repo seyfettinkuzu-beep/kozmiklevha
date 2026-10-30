@@ -77,23 +77,23 @@ export const Byline: React.FC<{ a: Article; date?: boolean; className?: string }
 
 /** Yatay liste satırı: solda fotoğraf, sağda etiket, başlık, özet, künye */
 export const PostRow: React.FC<{ a: Article }> = ({ a }) => (
-  <article className="group grid sm:grid-cols-[minmax(0,330px)_1fr] gap-5 sm:gap-8 py-8 border-b border-line">
+  <article className="group grid sm:grid-cols-[minmax(0,270px)_1fr] gap-4 sm:gap-7 py-7 border-b border-line">
     <a href={links.article(a.id)} className="block overflow-hidden bg-line">
       <img
         src={a.image}
         alt=""
         loading="lazy"
-        className="w-full h-52 object-cover group-hover:scale-[1.03] transition-transform duration-500"
+        className="w-full h-44 object-cover group-hover:scale-[1.03] transition-transform duration-500"
       />
     </a>
     <div>
       <Kicker a={a} />
       <a href={links.article(a.id)}>
-        <h2 className="headline text-[26px] sm:text-[31px] leading-[1.08] mt-4 mb-3 group-hover:text-navy transition-colors">
+        <h2 className="headline text-[22px] sm:text-[25px] leading-[1.12] mt-3.5 mb-2.5 group-hover:text-navy transition-colors">
           {a.title}
         </h2>
       </a>
-      <p className="text-[15.5px] leading-relaxed text-body mb-4">{a.excerpt}</p>
+      <p className="text-[14.5px] leading-relaxed text-body mb-4">{a.excerpt}</p>
       <Byline a={a} date={false} />
     </div>
   </article>
@@ -107,16 +107,16 @@ export const PostCard: React.FC<{ a: Article }> = ({ a }) => (
         src={a.image}
         alt=""
         loading="lazy"
-        className="w-full h-52 object-cover group-hover:scale-[1.03] transition-transform duration-500"
+        className="w-full h-40 object-cover group-hover:scale-[1.03] transition-transform duration-500"
       />
     </a>
     <Kicker a={a} />
     <a href={links.article(a.id)}>
-      <h3 className="headline text-[23px] leading-[1.12] mt-3 mb-2 group-hover:text-navy transition-colors">
+      <h3 className="headline text-[19px] leading-[1.18] mt-3 mb-2 group-hover:text-navy transition-colors">
         {a.title}
       </h3>
     </a>
-    <p className="text-[14.5px] leading-relaxed text-body mb-3 line-clamp-3">{a.excerpt}</p>
+    <p className="text-[14px] leading-relaxed text-body mb-3 line-clamp-3">{a.excerpt}</p>
     <Byline a={a} date={false} />
   </article>
 );
@@ -129,7 +129,7 @@ export const SectionTitle: React.FC<{ children: React.ReactNode; className?: str
 
 /** Logosuz yazı markası */
 export const Wordmark: React.FC<{ size?: 'lg' | 'sm'; light?: boolean }> = ({ size = 'lg', light = false }) => (
-  <span className={`whitespace-nowrap ${size === 'lg' ? 'text-[22px] sm:text-[26px]' : 'text-[17px]'}`}>
+  <span className={`whitespace-nowrap ${size === 'lg' ? 'text-[20px] sm:text-[22px]' : 'text-[17px]'}`}>
     <span className={`font-cinzel font-bold tracking-[0.1em] ${light ? 'text-[#f3ecdf]' : 'text-ink'}`}>KOZMİK</span>{' '}
     <span className="font-['Cormorant_Garamond'] italic font-medium text-gold" style={{ fontSize: '1.05em' }}>
       levha

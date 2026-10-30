@@ -38,8 +38,8 @@
 /* Yazı sayfası okuma tipografisi */
 .reading p {
   font-family: var(--font-read);
-  font-size: 1.125rem;
-  line-height: 1.85;
+  font-size: 1.0625rem;
+  line-height: 1.8;
   color: #2b2f3b;
   margin-bottom: 1.4em;
 }

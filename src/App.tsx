@@ -35,6 +35,8 @@ export default function App() {
   }, [route]);
 
   const openRoom = () => setRoomOpen(true);
+  // Ana sayfa ve yazı sayfaları en üstte video/görselle başlar; menü onun üzerine biner
+  const overlay = (route.name === 'home' && !query.trim()) || route.name === 'article';
 
   return (
     <div className="min-h-screen flex flex-col bg-paper">
@@ -45,8 +47,9 @@ export default function App() {
         onOpenRoom={openRoom}
         audioOn={audio.playing}
         onToggleAudio={toggleAudio}
+        overlay={overlay}
       />
-      <main className="flex-1">
+      <main className={`flex-1 ${overlay ? '' : 'pt-[67px] sm:pt-[73px]'}`}>
         {route.name === 'home' && <HomePage query={query} onOpenRoom={openRoom} />}
         {route.name === 'article' && <ArticlePage id={route.id} />}
         {route.name === 'category' && <CategoryPage id={route.id} onOpenRoom={openRoom} />}

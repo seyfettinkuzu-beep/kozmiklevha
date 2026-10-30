@@ -16,7 +16,7 @@ const norm = (t: string) =>
     .replace(/ı/g, 'i');
 
 const Wrap: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
-  <div className={`max-w-[1240px] mx-auto px-4 sm:px-10 ${className}`}>{children}</div>
+  <div className={`max-w-[1080px] mx-auto px-5 sm:px-10 ${className}`}>{children}</div>
 );
 
 const prefersReducedMotion = () =>
@@ -24,11 +24,12 @@ const prefersReducedMotion = () =>
 
 /** Tam genişlik manşet: varsa sessiz döngü video, yoksa görsel; altında künye */
 const HeroImage: React.FC<{ a: Article; eager?: boolean }> = ({ a, eager }) => {
-  const cls = 'w-full h-[300px] sm:h-[460px] lg:h-[560px] object-cover object-center block';
+  const cls = 'w-full h-[220px] sm:h-[310px] lg:h-[375px] object-cover object-center block';
   const v = a.video;
   const still = !v || prefersReducedMotion();
   return (
     <figure className="bg-night">
+      <div className="relative">
       {v && !still ? (
         <video className={cls} autoPlay muted loop playsInline preload="auto" poster={v.poster} aria-hidden>
           {v.webm && <source src={v.webm} type="video/webm" />}
@@ -37,9 +38,11 @@ const HeroImage: React.FC<{ a: Article; eager?: boolean }> = ({ a, eager }) => {
       ) : (
         <img src={v ? v.poster : a.image} alt="" loading={eager ? 'eager' : 'lazy'} className={cls} />
       )}
+      <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#0b1020]/75 to-transparent pointer-events-none" />
+      </div>
       {(v?.credit || a.credit) && (
         <figcaption className="bg-white">
-          <div className="max-w-[1320px] mx-auto px-4 sm:px-10 pt-2 text-right text-[11px] text-muted">
+          <div className="max-w-[1080px] mx-auto px-5 sm:px-10 pt-2 text-right text-[11px] text-muted">
             {v ? v.credit : a.credit}
           </div>
         </figcaption>
@@ -57,10 +60,10 @@ const Cabinet: React.FC = () => (
         <span className="kicker" style={{ color: '#b08a45' }}>
           <span>Merak Kabinesi · No. 01</span>
         </span>
-        <h2 className="headline text-[30px] sm:text-[44px] leading-[1.05] mt-4 mb-4">
+        <h2 className="headline text-[26px] sm:text-[34px] leading-[1.08] mt-4 mb-4">
           Bir Hekimin Mikroskop Başında Çizdiği Beyin
         </h2>
-        <p className="font-read text-[17px] sm:text-lg leading-[1.75] text-[#3a3a3a]">
+        <p className="font-read text-[16px] sm:text-[17px] leading-[1.75] text-[#3a3a3a]">
           Santiago Ramón y Cajal 1890'larda beyin dokusunu boyayıp mikroskopla inceledi ve gördüğü nöronları tek tek elle
           çizdi. Bu çizimler beynin ayrı hücrelerden oluşan bir ağ olduğunu gösterdi; Cajal 1906'da Nobel Tıp Ödülü'nü
           aldı ve modern sinirbilimin kurucularından sayılır.
@@ -112,18 +115,18 @@ export const HomePage: React.FC<{ query: string; onOpenRoom: () => void }> = ({ 
       <a href={links.article(featured.id)} className="block group">
         <HeroImage a={featured} eager />
       </a>
-      <section className="max-w-[880px] mx-auto px-4 sm:px-6 pt-8 pb-12 sm:pb-14 text-left sm:text-center border-b border-line">
+      <section className="max-w-[780px] mx-auto px-5 sm:px-6 pt-7 pb-10 sm:pb-12 text-left sm:text-center border-b border-line">
         <Kicker a={featured} />
         <a href={links.article(featured.id)}>
-          <h1 className="headline text-[34px] sm:text-[52px] lg:text-[62px] leading-[1.03] mt-5 mb-4 hover:text-navy transition-colors">
+          <h1 className="headline text-[28px] sm:text-[40px] lg:text-[46px] leading-[1.06] mt-4 mb-3 hover:text-navy transition-colors">
             {featured.title}
           </h1>
         </a>
-        <p className="text-[16.5px] sm:text-[19px] leading-relaxed text-body max-w-[720px] sm:mx-auto mb-5">{featured.excerpt}</p>
+        <p className="text-[15.5px] sm:text-[17px] leading-relaxed text-body max-w-[640px] sm:mx-auto mb-5">{featured.excerpt}</p>
         <Byline a={featured} className="sm:justify-center" />
       </section>
 
-      <Wrap className="grid lg:grid-cols-[1fr_330px] gap-12 lg:gap-16 py-12 sm:py-14">
+      <Wrap className="grid lg:grid-cols-[1fr_280px] gap-10 lg:gap-14 py-10 sm:py-12">
         <section>
           <SectionTitle>Son yazılar</SectionTitle>
           {listed.map((a) => (
@@ -138,7 +141,7 @@ export const HomePage: React.FC<{ query: string; onOpenRoom: () => void }> = ({ 
       {trio.length > 0 && (
         <Wrap className="py-12 sm:py-16">
           <SectionTitle className="mb-8">Daha fazla</SectionTitle>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {trio.map((a) => (
               <PostCard key={a.id} a={a} />
             ))}
@@ -161,12 +164,12 @@ export const CategoryPage: React.FC<{ id: string; onOpenRoom: () => void }> = ({
           <span className="kicker" style={{ color: CAT_COLOR[cat.id] }}>
             <span>Konu</span>
           </span>
-          <h1 className="headline text-[38px] sm:text-[56px] leading-[1.02] mt-5 mb-3">{cat.name}</h1>
+          <h1 className="headline text-[32px] sm:text-[44px] leading-[1.04] mt-5 mb-3">{cat.name}</h1>
           <p className="font-read italic text-xl text-body mb-3">{cat.subtitle}</p>
           <p className="text-[15.5px] leading-relaxed text-body">{cat.description}</p>
         </Wrap>
       </section>
-      <Wrap className="grid lg:grid-cols-[1fr_330px] gap-12 lg:gap-16 py-10">
+      <Wrap className="grid lg:grid-cols-[1fr_280px] gap-10 lg:gap-14 py-10">
         <section>
           <SectionTitle>{list.length} yazı</SectionTitle>
           {list.map((a) => (
@@ -224,14 +227,14 @@ export const ArticlePage: React.FC<{ id: string }> = ({ id }) => {
   return (
     <article className="pb-6">
       <HeroImage a={a} eager />
-      <header className="max-w-[860px] mx-auto px-4 sm:px-6 pt-8 pb-8 text-left sm:text-center">
+      <header className="max-w-[760px] mx-auto px-5 sm:px-6 pt-7 pb-7 text-left sm:text-center">
         <Kicker a={a} />
-        <h1 className="headline text-[34px] sm:text-[52px] leading-[1.04] mt-5 mb-4">{a.title}</h1>
-        <p className="text-[17px] sm:text-[19px] leading-relaxed text-body mb-5">{a.excerpt}</p>
+        <h1 className="headline text-[28px] sm:text-[40px] leading-[1.07] mt-4 mb-3">{a.title}</h1>
+        <p className="text-[15.5px] sm:text-[17px] leading-relaxed text-body mb-5">{a.excerpt}</p>
         <Byline a={a} className="sm:justify-center" />
       </header>
 
-      <div className="max-w-[700px] mx-auto px-4 sm:px-6">
+      <div className="max-w-[660px] mx-auto px-5 sm:px-6">
         <div className="flex flex-wrap items-center justify-between gap-3 py-4 border-y border-line mb-8">
           <a href={links.home} className="inline-flex items-center gap-1 text-[13px] text-muted hover:text-ink">
             <ArrowLeft className="w-4 h-4" /> Tüm yazılar
@@ -290,7 +293,7 @@ export const AboutPage: React.FC = () => (
     <span className="kicker" style={{ color: '#b08a45' }}>
       <span>Hakkında</span>
     </span>
-    <h1 className="headline text-[36px] sm:text-[48px] leading-[1.05] mt-5 mb-8">Kozmik Levha nedir?</h1>
+    <h1 className="headline text-[30px] sm:text-[40px] leading-[1.08] mt-5 mb-8">Kozmik Levha nedir?</h1>
     <div className="reading">
       <p>
         Kozmik Levha, evrenle zihin arasındaki şaşırtıcı benzerlikleri, sesin ve frekansın insana tesirini, yıldızlardan

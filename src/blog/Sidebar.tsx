@@ -29,9 +29,9 @@ export const Sidebar: React.FC<{ onOpenRoom: () => void; showPopular?: boolean }
             {popular.map((a, i) => (
               <li key={a.id} className="border-b border-line">
                 <a href={links.article(a.id)} className="group grid grid-cols-[34px_1fr] gap-2 py-4">
-                  <span className="font-serif font-extrabold text-[26px] leading-none text-gold">{i + 1}</span>
+                  <span className="font-serif font-extrabold text-[22px] leading-none text-gold">{i + 1}</span>
                   <span>
-                    <span className="block font-serif font-bold text-[17px] leading-snug text-ink group-hover:text-navy transition-colors">
+                    <span className="block font-serif font-bold text-[15.5px] leading-snug text-ink group-hover:text-navy transition-colors">
                       {a.title}
                     </span>
                     <span className="byline block mt-1.5">{a.categoryName}</span>
@@ -48,7 +48,7 @@ export const Sidebar: React.FC<{ onOpenRoom: () => void; showPopular?: boolean }
         <dl>
           {GLOSSARY.map(([t, d]) => (
             <div key={t} className="mt-4">
-              <dt className="font-serif font-bold text-[17px] text-ink">{t}</dt>
+              <dt className="font-serif font-bold text-[15.5px] text-ink">{t}</dt>
               <dd className="text-[13.5px] leading-relaxed text-body mt-1">{d}</dd>
             </div>
           ))}
