@@ -16,7 +16,7 @@ const norm = (t: string) =>
     .replace(/ı/g, 'i');
 
 const Wrap: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
-  <div className={`max-w-[1080px] mx-auto px-5 sm:px-10 ${className}`}>{children}</div>
+  <div className={`max-w-[1160px] mx-auto px-5 sm:px-10 ${className}`}>{children}</div>
 );
 
 const prefersReducedMotion = () =>
@@ -126,7 +126,7 @@ export const HomePage: React.FC<{ query: string; onOpenRoom: () => void }> = ({ 
         <Byline a={featured} className="sm:justify-center" />
       </section>
 
-      <Wrap className="grid lg:grid-cols-[1fr_280px] gap-10 lg:gap-14 py-10 sm:py-12">
+      <Wrap className="grid lg:grid-cols-[1fr_320px] gap-10 lg:gap-12 py-10 sm:py-12">
         <section>
           <SectionTitle>Son yazılar</SectionTitle>
           {listed.map((a) => (
@@ -169,7 +169,7 @@ export const CategoryPage: React.FC<{ id: string; onOpenRoom: () => void }> = ({
           <p className="text-[15.5px] leading-relaxed text-body">{cat.description}</p>
         </Wrap>
       </section>
-      <Wrap className="grid lg:grid-cols-[1fr_280px] gap-10 lg:gap-14 py-10">
+      <Wrap className="grid lg:grid-cols-[1fr_320px] gap-10 lg:gap-12 py-10">
         <section>
           <SectionTitle>{list.length} yazı</SectionTitle>
           {list.map((a) => (

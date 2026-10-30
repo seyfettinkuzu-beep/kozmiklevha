@@ -56,45 +56,107 @@ export const Kicker: React.FC<{ a: Pick<Article, 'categoryId' | 'categoryName'>;
   );
 };
 
-/** "YAZAN KOZMİK LEVHA | 30 EKİM 2026 | 6 DK" satırı */
-export const Byline: React.FC<{ a: Article; date?: boolean; className?: string }> = ({ a, date = true, className = '' }) => (
+/** Kaydedilen yazılar (yalnız bu tarayıcıda) */
+const SAVED_KEY = 'kl-kaydedilenler';
+const readSaved = (): string[] => {
+  try {
+    return JSON.parse(localStorage.getItem(SAVED_KEY) || '[]');
+  } catch {
+    return [];
+  }
+};
+export const useSaved = () => {
+  const [saved, setSaved] = React.useState<string[]>(readSaved);
+  React.useEffect(() => {
+    const on = () => setSaved(readSaved());
+    window.addEventListener('kl-saved', on);
+    return () => window.removeEventListener('kl-saved', on);
+  }, []);
+  const toggle = (id: string) => {
+    const next = saved.includes(id) ? saved.filter((x) => x !== id) : [...saved, id];
+    try {
+      localStorage.setItem(SAVED_KEY, JSON.stringify(next));
+    } catch {
+      /* depolama kapalıysa yalnız bu oturumda tut */
+    }
+    setSaved(next);
+    window.dispatchEvent(new Event('kl-saved'));
+  };
+  return { saved, toggle };
+};
+
+export const SaveButton: React.FC<{ id: string }> = ({ id }) => {
+  const { saved, toggle } = useSaved();
+  const on = saved.includes(id);
+  return (
+    <button
+      onClick={(e) => {
+        e.preventDefault();
+        toggle(id);
+      }}
+      aria-label={on ? 'Kaydedilenlerden çıkar' : 'Sonra okumak için kaydet'}
+      title={on ? 'Kaydedildi' : 'Sonra oku'}
+      className="inline-flex items-center cursor-pointer text-ink hover:text-gold transition-colors"
+    >
+      <svg width="11" height="13" viewBox="0 0 11 13" aria-hidden>
+        <path d="M1 1h9v11L5.5 9 1 12z" fill={on ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      </svg>
+    </button>
+  );
+};
+
+const Bar = () => <span className="w-[1.5px] h-3.5 bg-gold" />;
+
+/** "Yazan KOZMİK LEVHA | 30 EKİM 2026 | 6 DK | [kaydet]" satırı */
+export const Byline: React.FC<{ a: Article; date?: boolean; className?: string; save?: boolean }> = ({
+  a,
+  date = true,
+  className = '',
+  save = true,
+}) => (
   <div className={`byline flex flex-wrap items-center gap-x-3 gap-y-2 ${className}`}>
     <span>
-      <i className="font-read normal-case tracking-normal text-[13.5px]">Yazan</i>{' '}
-      <b className="text-ink font-semibold">{a.author}</b>
+      <i className="font-read normal-case tracking-normal text-[13.5px] text-ink">Yazan</i>{' '}
+      <span>{a.author}</span>
     </span>
     {date && (
       <>
-        <span className="w-px h-3 bg-gold" />
+        <Bar />
         <span>{a.date}</span>
       </>
     )}
-    <span className="w-px h-3 bg-gold" />
+    <Bar />
     <span>{a.readTime.replace(' okuma', '')}</span>
-    <NatureBadge nature={a.nature} />
+    {save && (
+      <>
+        <Bar />
+        <SaveButton id={a.id} />
+      </>
+    )}
+    <NatureBadge nature={a.nature} className="ml-1" />
   </div>
 );
 
-/** Yatay liste satırı: solda fotoğraf, sağda etiket, başlık, özet, künye */
+/** Yatay liste satırı: solda fotoğraf; sağda etiket, başlık, künye, özet */
 export const PostRow: React.FC<{ a: Article }> = ({ a }) => (
-  <article className="group grid sm:grid-cols-[minmax(0,270px)_1fr] gap-4 sm:gap-7 py-7 border-b border-line">
-    <a href={links.article(a.id)} className="block overflow-hidden bg-line">
+  <article className="group grid sm:grid-cols-[minmax(0,46%)_1fr] gap-5 sm:gap-8 py-8 first:pt-6">
+    <a href={links.article(a.id)} className="block overflow-hidden bg-line self-start">
       <img
         src={a.image}
         alt=""
         loading="lazy"
-        className="w-full h-44 object-cover group-hover:scale-[1.03] transition-transform duration-500"
+        className="w-full aspect-[16/9] object-cover group-hover:scale-[1.03] transition-transform duration-500"
       />
     </a>
     <div>
       <Kicker a={a} />
       <a href={links.article(a.id)}>
-        <h2 className="headline text-[22px] sm:text-[25px] leading-[1.12] mt-3.5 mb-2.5 group-hover:text-navy transition-colors">
+        <h2 className="headline text-[22px] sm:text-[25px] leading-[1.15] mt-3.5 mb-3 group-hover:text-navy transition-colors">
           {a.title}
         </h2>
       </a>
-      <p className="text-[14.5px] leading-relaxed text-body mb-4">{a.excerpt}</p>
-      <Byline a={a} date={false} />
+      <Byline a={a} />
+      <p className="text-[15px] leading-[1.75] text-body mt-3.5">{a.excerpt}</p>
     </div>
   </article>
 );
